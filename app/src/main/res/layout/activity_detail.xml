@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.detail.DetailActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+            app:contentScrim="@color/primaryColor"
+            app:title="@string/app_name"
+            app:expandedTitleGravity="center|bottom">
+
+            <ImageView
+                android:id="@+id/ivDetailGame"
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:contentDescription="@string/game_image"
+                android:src="@drawable/ic_image"
+                android:scaleType="centerCrop"/>
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/favorite_button"
+        android:src="@drawable/ic_favorite_selector"
+        app:layout_anchor="@id/appBarDetail"
+        app:layout_anchorGravity="bottom|end"
+        android:layout_margin="32dp"/>
+    
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvRatingDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tvGenresDetail"
+                tools:text="4.★"
+                android:textColor="@color/white"
+                android:textSize="28sp"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvGenresDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvRatingDetail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tvPlatformsDetailTitle"
+                tools:text="Action, Adventure"
+                android:textColor="@color/white"
+                android:textStyle="bold|italic"
+                android:textSize="28sp"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvPlatformsDetailTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvGenresDetail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tvPlatformsDetail"
+                android:text="@string/section_title_platforms"
+                style="@style/Theme.Gamesss.SectionTitle"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvPlatformsDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPlatformsDetailTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tvWebsiteDetailTitle"
+                tools:text="PC, Xbox, PlayStation"
+                style="@style/Theme.Gamesss.Section"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvWebsiteDetailTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPlatformsDetail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tvWebsiteDetail"
+                style="@style/Theme.Gamesss.SectionTitle"
+                android:text="@string/section_title_website"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvWebsiteDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvWebsiteDetailTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tvDeveloperDetailTitle"
+                style="@style/Theme.Gamesss.Section"
+                tools:text="www.website.com/games/game-name"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvDeveloperDetailTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvWebsiteDetail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tvDeveloperDetail"
+                android:text="@string/section_title_developers"
+                style="@style/Theme.Gamesss.SectionTitle"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvDeveloperDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDeveloperDetailTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tvPublisherDetailTitle"
+                tools:text="Developer 1, Developer 2, Developer 3"
+                style="@style/Theme.Gamesss.Section"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvPublisherDetailTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDeveloperDetail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tvPublisherDetail"
+                android:text="@string/section_title_publishers"
+                style="@style/Theme.Gamesss.SectionTitle"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvPublisherDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPublisherDetailTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tvAboutDetailTitle"
+                tools:text="Publisher 1, Publisher 2, Publisher 3"
+                style="@style/Theme.Gamesss.Section"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvAboutDetailTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvPublisherDetail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/tvAboutDetail"
+                style="@style/Theme.Gamesss.SectionTitle"
+                android:text="@string/section_title_about"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvAboutDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvAboutDetailTitle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                style="@style/Theme.Gamesss.Section.About"
+                tools:text="Lorem ipsum dol amet"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
