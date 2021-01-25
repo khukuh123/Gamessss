@@ -9,4 +9,4 @@ data class GameList(
     val name: String = "",
     val rating: Double = 0.0,
     val image: String = ""
-): Parcelable
+) : Parcelable

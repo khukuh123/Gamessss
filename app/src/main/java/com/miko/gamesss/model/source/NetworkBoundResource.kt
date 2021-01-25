@@ -6,7 +6,6 @@ import com.miko.gamesss.model.source.remote.ApiResponse
 import com.miko.gamesss.model.source.remote.StatusResponse
 import com.miko.gamesss.utils.AppExecutors
 import com.miko.gamesss.vo.Resource
-import java.util.concurrent.Executor
 
 abstract class NetworkBoundResource<ResultType, RequestType>(private val executor: AppExecutors) {
 
@@ -18,19 +17,17 @@ abstract class NetworkBoundResource<ResultType, RequestType>(private val executo
         @Suppress("LeakingThis")
         val dbSource = loadFromDB()
 
-        result.addSource(dbSource){ data->
+        result.addSource(dbSource) { data ->
             result.removeSource(dbSource)
-            if(shouldFetch(data)){
+            if (shouldFetch(data)) {
                 fetchFromNetwork(dbSource)
-            }else{
-                result.addSource(dbSource){newData ->
+            } else {
+                result.addSource(dbSource) { newData ->
                     result.value = Resource.success(newData)
                 }
             }
         }
     }
-
-    protected fun onFetchFailed(){}
 
     protected abstract fun loadFromDB(): LiveData<ResultType>
 
@@ -40,32 +37,31 @@ abstract class NetworkBoundResource<ResultType, RequestType>(private val executo
 
     protected abstract fun saveCallResult(data: RequestType)
 
-    private fun fetchFromNetwork(dbSource: LiveData<ResultType>){
+    private fun fetchFromNetwork(dbSource: LiveData<ResultType>) {
         val apiResponse = createCall()
 
-        result.addSource(dbSource){ newData ->
+        result.addSource(dbSource) { newData ->
             result.value = Resource.loading(newData)
         }
-        result.addSource(apiResponse){ response ->
+        result.addSource(apiResponse) { response ->
             result.removeSource(apiResponse)
             result.removeSource(dbSource)
-            when(response.status){
+            when (response.status) {
                 StatusResponse.SUCCESS -> executor.diskIO().execute {
                     saveCallResult(response.body)
                     executor.mainThread().execute {
-                        result.addSource(loadFromDB()){ newData ->
+                        result.addSource(loadFromDB()) { newData ->
                             result.value = Resource.success(newData)
                         }
                     }
                 }
                 StatusResponse.EMPTY -> executor.mainThread().execute {
-                    result.addSource(loadFromDB()){ newData ->
+                    result.addSource(loadFromDB()) { newData ->
                         result.value = Resource.error(response.message, newData)
                     }
                 }
                 StatusResponse.ERROR -> {
-                    onFetchFailed()
-                    result.addSource(dbSource){ newData ->
+                    result.addSource(dbSource) { newData ->
                         result.value = Resource.error(response.message, newData)
                     }
                 }

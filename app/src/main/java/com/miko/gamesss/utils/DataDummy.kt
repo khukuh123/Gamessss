@@ -1,14 +1,15 @@
 package com.miko.gamesss.utils
 
+import com.miko.gamesss.model.GameDetail
 import com.miko.gamesss.model.GameList
-import com.miko.gamesss.model.source.remote.response.GameListItem
-import com.miko.gamesss.model.source.remote.response.GameListResponse
+import com.miko.gamesss.model.Section
 import kotlin.random.Random
 
 object DataDummy {
-    fun generateGameList(): ArrayList<GameList>{
+
+    fun generateGameList(): ArrayList<GameList> {
         val arrayList = ArrayList<GameList>()
-        for(i in 1 until 11){
+        for (i in 1 until 11) {
             arrayList.add(
                 GameList(
                     Random(i).nextInt(1, 10),
@@ -22,21 +23,59 @@ object DataDummy {
         return arrayList
     }
 
-    fun generateGameListResponse(): GameListResponse {
-        val dummyGameList = generateGameList()
-        val mutableListGame = mutableListOf<GameListItem>()
-        for(i in dummyGameList){
-            mutableListGame.add(i.toGameListItem())
-        }
+    fun generateGameDetail(): GameDetail {
+        val listSection = ArrayList<Section>()
+        val releasedDate = "[2 February 1995]"
+        val website = "[www.website.com/games/game-name]"
+        val playtime = "[69]"
+        val listPlatforms = "[PC, PlayStation, Xbox]"
+        val listDevelopers = "[Developer 1, Developer 2, Developer 3]"
+        val listPublishers = "[Publisher 1, Publisher 2, Publisher 3]"
+        listSection.add(
+            Section(
+                "Released Date",
+                RoomEntity.stringToListOfSectionItem(releasedDate)
+            )
+        )
+        listSection.add(
+            Section(
+                "Website",
+                RoomEntity.stringToListOfSectionItem(website)
+            )
+        )
+        listSection.add(
+            Section(
+                "Average Playtime",
+                RoomEntity.stringToListOfSectionItem(playtime)
+            )
+        )
+        listSection.add(
+            Section(
+                "Platforms",
+                RoomEntity.stringToListOfSectionItem(listPlatforms)
+            )
+        )
+        listSection.add(
+            Section(
+                "Developers",
+                RoomEntity.stringToListOfSectionItem(listDevelopers)
+            )
+        )
+        listSection.add(
+            Section(
+                "Publishers",
+                RoomEntity.stringToListOfSectionItem(listPublishers)
+            )
+        )
 
-        return GameListResponse(mutableListGame)
+        return GameDetail(
+            "Game 1",
+            5.0,
+            "Action, Action, Action",
+            "Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum ",
+            "",
+            listSection
+        )
     }
-
-    fun GameList.toGameListItem() = GameListItem(
-        this.name,
-        this.rating,
-        this.id,
-        this.image
-    )
 
 }

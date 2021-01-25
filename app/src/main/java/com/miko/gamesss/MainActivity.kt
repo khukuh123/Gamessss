@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.bundleOf
@@ -17,12 +18,16 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.miko.gamesss.databinding.ActivityMainBinding
+import com.miko.gamesss.ui.favorite.FavoriteFragment
 import com.miko.gamesss.ui.search.SearchFragment
 
 class MainActivity : AppCompatActivity() {
     private var binding: ActivityMainBinding? = null
     private lateinit var navigationController: NavController
+    private lateinit var navigationHostFragment: NavHostFragment
     private var searchViewItem: MenuItem? = null
+    private var pressedTime: Long = -1
+    private var mMenu: Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +36,9 @@ class MainActivity : AppCompatActivity() {
 
         binding?.run {
             val navigationView = navigationView
-            val navigationHostFragment =
+            this@MainActivity.navigationHostFragment =
                 supportFragmentManager.findFragmentById(R.id.navigationHostFragment) as NavHostFragment
-            navigationController = navigationHostFragment.navController
+            navigationController = this@MainActivity.navigationHostFragment.navController
             val appBarConfiguration = AppBarConfiguration.Builder(
                 R.id.homeFragment,
                 R.id.favoriteFragment
@@ -44,8 +49,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        if (navigationHostFragment.childFragmentManager.backStackEntryCount == 0) {
+            if ((pressedTime + 2000 > System.currentTimeMillis())) {
+                super.onBackPressed()
+            } else {
+                Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show()
+            }
+            pressedTime = System.currentTimeMillis()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.action_bar_menu, menu)
+        menuInflater.inflate(R.menu.main_action_bar_menu, menu)
+
+        mMenu = menu
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
         searchViewItem = menu?.findItem(R.id.btnSearch)
@@ -55,8 +75,14 @@ class MainActivity : AppCompatActivity() {
                     searchViewItem?.collapseActionView()
                 }
             }
+            if (destination.id == R.id.favoriteFragment) {
+                menu?.findItem(R.id.btnDelete)?.isVisible = true
+            } else if (destination.id != R.id.favoriteFragment) {
+                menu?.findItem(R.id.btnDelete)?.isVisible = false
+            }
         }
         val searchView = searchViewItem?.actionView as SearchView
+        searchView.maxWidth = Int.MAX_VALUE
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
         searchView.queryHint = "ex. Ronaldinho Soccer"
@@ -70,6 +96,7 @@ class MainActivity : AppCompatActivity() {
                         NavOptions.Builder().setLaunchSingleTop(true).build()
                     )
                     hideKeyBoard()
+                    searchView.clearFocus()
                 }
                 return true
             }
@@ -94,6 +121,14 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> {
                 navigationController.popBackStack()
+            }
+            R.id.btnDelete -> {
+                val buttonDelete = mMenu?.findItem(R.id.btnDelete)
+                if (buttonDelete != null) {
+                    val favoriteFragment =
+                        navigationHostFragment.childFragmentManager.primaryNavigationFragment as FavoriteFragment
+                    favoriteFragment.updateList()
+                }
             }
         }
         return super.onOptionsItemSelected(item)

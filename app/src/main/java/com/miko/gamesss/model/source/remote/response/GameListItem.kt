@@ -17,5 +17,4 @@ class GameListItem(
 
     @field:SerializedName("background_image")
     val backgroundImage: String?
-) : Parcelable {
-}
+) : Parcelable

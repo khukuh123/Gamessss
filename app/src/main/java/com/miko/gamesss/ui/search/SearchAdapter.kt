@@ -6,29 +6,26 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.miko.gamesss.R
-import com.miko.gamesss.databinding.SearchListRowBinding
+import com.miko.gamesss.databinding.ListRowSearchBinding
 import com.miko.gamesss.model.GameList
 
 class SearchAdapter(private val gameLists: ArrayList<GameList>) :
     RecyclerView.Adapter<SearchAdapter.ListViewHolder>() {
-    inner class ListViewHolder(private val binding: SearchListRowBinding) :
+    inner class ListViewHolder(private val binding: ListRowSearchBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(gameList: GameList, onItemClickCallback: OnItemClickCallback) {
-            with(binding){
+        fun bind(gameList: GameList) {
+            with(binding) {
                 Glide.with(root.context).load(gameList.image).apply(
                     RequestOptions().error(R.drawable.ic_image)
                 ).into(ivSearchGameImageRow)
-                ivSearchGameImageRow.setOnClickListener {
-                    onItemClickCallback.onItemClicked(gameList)
-                }
                 tvSearchGameNameRow.text = gameList.name
-                val rating = "${String.format("%.1f", gameList.rating)}★"
+                val rating = "${String.format("%.1f", gameList.rating)} ★"
                 tvSearchGameRatingRow.text = rating
             }
         }
     }
 
-    private var binding: SearchListRowBinding? = null
+    private var binding: ListRowSearchBinding? = null
     private lateinit var onItemClickCallback: OnItemClickCallback
 
     fun setGameLists(newData: ArrayList<GameList>) {
@@ -37,17 +34,22 @@ class SearchAdapter(private val gameLists: ArrayList<GameList>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
-        binding = SearchListRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ListViewHolder(binding as SearchListRowBinding)
+        binding = ListRowSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return ListViewHolder(binding as ListRowSearchBinding)
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-        holder.bind(gameLists[position], onItemClickCallback)
+        with(holder) {
+            bind(gameLists[position])
+            itemView.setOnClickListener {
+                onItemClickCallback.onItemClicked(gameLists[position])
+            }
+        }
     }
 
     override fun getItemCount(): Int = gameLists.size
 
-    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback){
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 
@@ -55,7 +57,7 @@ class SearchAdapter(private val gameLists: ArrayList<GameList>) :
         binding = null
     }
 
-    interface OnItemClickCallback{
+    interface OnItemClickCallback {
         fun onItemClicked(gameList: GameList)
     }
 }

@@ -7,6 +7,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class GameListResponse(
 
-	@field:SerializedName("results")
-	val results: List<GameListItem>
+    @field:SerializedName("results")
+    val results: List<GameListItem>
 ) : Parcelable

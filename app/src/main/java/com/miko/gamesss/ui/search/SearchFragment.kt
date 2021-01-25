@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -55,17 +56,28 @@ class SearchFragment : Fragment() {
                             Status.SUCCESS -> {
                                 val data = result.data as List<GameList>
                                 updateRecyclerList(ArrayList(data))
+                                showLoadingScreen(false)
                             }
                             Status.LOADING -> {
-
+                                showLoadingScreen(true)
                             }
                             Status.ERROR -> {
-
+                                showLoadingScreen(false)
+                                val data = result.data as List<GameList>
+                                updateRecyclerList(ArrayList(data))
+                                Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT)
+                                    .show()
                             }
                         }
                     }
                 })
             }
+        }
+    }
+
+    private fun showLoadingScreen(visible: Boolean) {
+        binding?.run {
+            loadingSearch.root.visibility = if (visible) View.VISIBLE else View.GONE
         }
     }
 

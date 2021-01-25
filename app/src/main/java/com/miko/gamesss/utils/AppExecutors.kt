@@ -2,7 +2,6 @@ package com.miko.gamesss.utils
 
 import android.os.Handler
 import android.os.Looper
-import androidx.annotation.MainThread
 import androidx.annotation.VisibleForTesting
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
@@ -13,11 +12,11 @@ class AppExecutors @VisibleForTesting constructor(
     private val mainThread: Executor
 ) {
 
-    companion object{
-        private const val THREAD_COUNT=3
+    companion object {
+        private const val THREAD_COUNT = 3
     }
 
-    constructor(): this(
+    constructor() : this(
         Executors.newSingleThreadExecutor(),
         Executors.newFixedThreadPool(THREAD_COUNT),
         MainThreadExecutor()
@@ -29,10 +28,10 @@ class AppExecutors @VisibleForTesting constructor(
 
     fun mainThread(): Executor = mainThread
 
-    private class MainThreadExecutor: Executor{
+    private class MainThreadExecutor : Executor {
         private val mainThreadHandler = Handler(Looper.getMainLooper())
         override fun execute(command: Runnable?) {
-            if(command!=null){
+            if (command != null) {
                 mainThreadHandler.post(command)
             }
         }

@@ -6,11 +6,11 @@ import com.miko.gamesss.model.GameList
 import com.miko.gamesss.model.source.GamesRepository
 import com.miko.gamesss.vo.Resource
 
-class SearchViewModel(private val gamesRepository: GamesRepository): ViewModel() {
+class SearchViewModel(private val gamesRepository: GamesRepository) : ViewModel() {
 
-    private lateinit var gameLists : LiveData<Resource<List<GameList>>>
+    private lateinit var gameLists: LiveData<Resource<List<GameList>>>
 
-    fun setSearchQuery(query: String){
+    fun setSearchQuery(query: String) {
         gameLists = gamesRepository.searchGame(query)
     }
 

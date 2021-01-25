@@ -11,8 +11,8 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.2"
 
-     buildFeatures{
-         viewBinding = true
+    buildFeatures {
+        viewBinding = true
     }
 
     defaultConfig {
@@ -56,7 +56,8 @@ dependencies {
     implementation "androidx.room:room-runtime:$roomRuntimeVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
-    implementation "androidx.cardview:cardview:1.0.0"
+    implementation 'com.ms-square:expandableTextView:0.1.4'
+    implementation "androidx.test.espresso:espresso-idling-resource:$idleResourceVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
     testImplementation 'junit:junit:4.13.1'
     testImplementation "org.mockito:mockito-core:3.6.0"

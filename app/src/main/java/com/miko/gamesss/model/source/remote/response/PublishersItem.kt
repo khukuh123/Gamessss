@@ -7,6 +7,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class PublishersItem(
 
-	@field:SerializedName("name")
-	val name: String
+    @field:SerializedName("name")
+    val name: String
 ) : Parcelable

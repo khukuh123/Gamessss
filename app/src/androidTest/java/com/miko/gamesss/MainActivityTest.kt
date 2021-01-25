@@ -1,28 +1,59 @@
 package com.miko.gamesss
 
-import androidx.recyclerview.widget.RecyclerView
+import android.view.View
 import androidx.test.core.app.ActivityScenario
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.IdlingRegistry
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.contrib.RecyclerViewActions
-import com.miko.gamesss.utils.DataDummy
+import androidx.test.espresso.matcher.RootMatchers.withDecorView
+import androidx.test.espresso.matcher.ViewMatchers.*
+import com.miko.gamesss.EspressoCustomMethod.typeSearchViewText
+import com.miko.gamesss.EspressoCustomMethod.withIndex
+import com.miko.gamesss.utils.EspressoIdlingResource
+import org.hamcrest.CoreMatchers.not
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
-class MainActivityTest{
 
-    private val dummy = DataDummy.generateGameList()
+class MainActivityTest {
+
+    private lateinit var activity: ActivityScenario<MainActivity>
+    private lateinit var decorView: View
 
     @Before
-    fun setUp(){
-        ActivityScenario.launch(MainActivity::class.java)
+    fun setUp() {
+        IdlingRegistry.getInstance().register(EspressoIdlingResource.espressoTestIdlingResource)
+        activity = ActivityScenario.launch(MainActivity::class.java)
+        activity.onActivity {
+            decorView = it.window.decorView
+        }
+    }
+
+    @After
+    fun tearUp() {
+        IdlingRegistry.getInstance().unregister(EspressoIdlingResource.espressoTestIdlingResource)
     }
 
     @Test
-    fun loadGameList(){
-        onView(withId(R.id.rvHome)).check(matches(isDisplayed())).perform(RecyclerViewActions.scrollToPosition<RecyclerView.ViewHolder>(dummy.size))
+    fun pressBackAgainToExitTest() {
+        onView(withId(R.id.favoriteFragment)).check(matches(isDisplayed())).perform(click())
+        onView(withIndex(withId(R.id.btnSearch), 0)).check(matches(isDisplayed())).perform(click())
+        onView(withIndex(withId(R.id.btnSearch), 0)).check(matches(isDisplayed())).perform(
+            typeSearchViewText("Dark Souls")
+        )
+        Espresso.pressBack()
+        Espresso.pressBack()
+        Espresso.pressBack()
+        Espresso.pressBack()
+        Espresso.pressBack()
+        onView(withText("Press back again to exit")).inRoot(withDecorView(not(decorView))).check(
+            matches(
+                isDisplayed()
+            )
+        )
     }
 
 }

@@ -7,6 +7,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class DevelopersItem(
 
-	@field:SerializedName("name")
-	val name: String
+    @field:SerializedName("name")
+    val name: String
 ) : Parcelable

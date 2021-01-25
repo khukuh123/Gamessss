@@ -1,13 +1,15 @@
-package com.miko.gamesss
+package com.miko.gamesss.ui.home
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.miko.gamesss.model.GameList
 import com.miko.gamesss.model.source.GamesRepository
-import com.miko.gamesss.ui.home.HomeViewModel
 import com.miko.gamesss.utils.DataDummy
-import org.junit.Assert.*
+import com.miko.gamesss.vo.Resource
+import com.nhaarman.mockitokotlin2.atLeastOnce
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -21,7 +23,6 @@ import org.mockito.junit.MockitoJUnitRunner
 class HomeViewModelTest {
 
     private lateinit var homeViewModel: HomeViewModel
-    private val dummy = DataDummy.generateGameList()
 
     @Mock
     private lateinit var gamesRepository: GamesRepository
@@ -30,7 +31,7 @@ class HomeViewModelTest {
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
     @Mock
-    private lateinit var observer: Observer<List<GameList>>
+    private lateinit var observer: Observer<Resource<List<GameList>>>
 
     @Before
     fun setUp() {
@@ -38,13 +39,15 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun getGameList() {
-        val gameList = MutableLiveData<List<GameList>>()
-        gameList.value = dummy
+    fun `getGameList's gamesRepository called at least once, return non-null and 10 size result and there's a change on observer`() {
+        val dummy = Resource.success(DataDummy.generateGameList().toList())
+        val gameLists = MutableLiveData<Resource<List<GameList>>>()
+        gameLists.value = dummy
 
-        `when`(gamesRepository.getListGame()).thenReturn(gameList)
-        val result = homeViewModel.getGameList().value
-        verify(gamesRepository).getListGame()
+        `when`(gamesRepository.getListGame()).thenReturn(gameLists)
+        homeViewModel.setGameList()
+        val result = homeViewModel.getGameList().value?.data
+        verify(gamesRepository, atLeastOnce()).getListGame()
         assertNotNull(result)
         assertEquals(10, result?.size)
 

@@ -8,9 +8,10 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven { url 'https://jitpack.io' }
     }
     dependencies {
-        classpath "com.android.tools.build:gradle:4.1.1"
+        classpath "com.android.tools.build:gradle:4.1.2"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
@@ -44,4 +45,6 @@ ext{
     roomVersion = '2.2.6'
     roomRuntimeVersion = '2.2.6'
     navigationVersion = '2.3.2'
+    etvVersion = '0.1.4'
+    idleResourceVersion = '3.3.0'
 }

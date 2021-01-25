@@ -1,17 +1,15 @@
 <resources>
     <string name="app_name">Gamesss</string>
     <string name="game_image">Game Image</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="top_list">DISCOVER GAMES</string>
+    <string name="top_list">TOP GAMES</string>
     <string name="title_home">Home</string>
     <string name="title_search">Search</string>
     <string name="title_favorite">Favorite</string>
     <string name="result">RESULT</string>
     <string name="favorite_button">Favorite Button</string>
-    <string name="section_title_about">ABOUT</string>
-    <string name="section_title_website">WEBSITE</string>
-    <string name="section_title_platforms">PLATFORMS</string>
-    <string name="section_title_developers">DEVELOPERS</string>
-    <string name="section_title_publishers">PUBLISHERS</string>
+    <string name="show_more">Show More</string>
+    <string name="section_title">Section Title</string>
+    <string name="favorite">Favorite</string>
+    <string name="clear_button">Clear Button</string>
+    <string name="delete_favorite">Delete Favorite</string>
 </resources>

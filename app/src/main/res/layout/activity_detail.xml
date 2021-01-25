@@ -13,25 +13,34 @@
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/ctlDetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
             app:contentScrim="@color/primaryColor"
-            app:title="@string/app_name"
-            app:expandedTitleGravity="center|bottom">
+            app:expandedTitleGravity="bottom|start"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+            tools:title="@string/app_name">
 
             <ImageView
                 android:id="@+id/ivDetailGame"
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
+                android:layout_height="240dp"
                 android:contentDescription="@string/game_image"
-                android:src="@drawable/ic_image"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_image" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/gradient_game_image" />
 
             <androidx.appcompat.widget.Toolbar
+                android:id="@+id/myToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
+                android:theme="@style/ThemeOverlay.AppCompat.Dark"
+                app:layout_collapseMode="pin" />
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -41,17 +50,17 @@
         android:id="@+id/fabFavorite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="32dp"
         android:contentDescription="@string/favorite_button"
         android:src="@drawable/ic_favorite_selector"
         app:layout_anchor="@id/appBarDetail"
-        app:layout_anchorGravity="bottom|end"
-        android:layout_margin="32dp"/>
-    
+        app:layout_anchorGravity="bottom|end" />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -60,139 +69,77 @@
                 android:id="@+id/tvRatingDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                app:layout_constraintBottom_toTopOf="@id/tvGenresDetail"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/tvGenresDetail"
-                tools:text="4.★"
-                android:textColor="@color/white"
-                android:textSize="28sp"/>
+                tools:text="4.2★" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvGenresDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:textColor="@color/white"
+                android:textSize="28sp"
+                android:textStyle="bold|italic"
+                app:layout_constraintBottom_toTopOf="@id/etvAboutDetail"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvRatingDetail"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/tvPlatformsDetailTitle"
-                tools:text="Action, Adventure"
-                android:textColor="@color/white"
-                android:textStyle="bold|italic"
-                android:textSize="28sp"/>
+                tools:text="Action, Adventure" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvPlatformsDetailTitle"
-                android:layout_width="wrap_content"
+            <com.ms.square.android.expandabletextview.ExpandableTextView xmlns:expandableTextView="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/etvAboutDetail"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvGenresDetail"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/tvPlatformsDetail"
-                android:text="@string/section_title_platforms"
-                style="@style/Theme.Gamesss.SectionTitle"/>
+                expandableTextView:animDuration="200"
+                expandableTextView:layout_constraintBottom_toTopOf="@id/elvDetail"
+                expandableTextView:layout_constraintEnd_toEndOf="parent"
+                expandableTextView:layout_constraintStart_toStartOf="parent"
+                expandableTextView:layout_constraintTop_toBottomOf="@id/tvGenresDetail"
+                expandableTextView:maxCollapsedLines="3">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvPlatformsDetail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvPlatformsDetailTitle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/tvWebsiteDetailTitle"
-                tools:text="PC, Xbox, PlayStation"
-                style="@style/Theme.Gamesss.Section"/>
+                <TextView
+                    android:id="@id/expandable_text"
+                    style="@style/Theme.Gamesss.Section.About"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dignissim purus a orci maximus accumsan. Praesent efficitur neque id sagittis tempus. Aliquam erat volutpat. Nam sit amet erat pretium, blandit dolor in, sagittis metus. Donec non auctor massa, eu porta velit. Sed vitae orci felis. Praesent est metus, condimentum non purus vel, consectetur consequat magna. Vivamus ut tincidunt lacus, vel faucibus nulla. In mi nulla, placerat non dui et, dictum faucibus sapien. Pellentesque sed lobortis lorem." />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvWebsiteDetailTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvPlatformsDetail"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/tvWebsiteDetail"
-                style="@style/Theme.Gamesss.SectionTitle"
-                android:text="@string/section_title_website"/>
+                <ImageButton
+                    android:id="@id/expand_collapse"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center|bottom"
+                    android:background="@android:color/transparent"
+                    android:contentDescription="@string/show_more"
+                    android:padding="16dp" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvWebsiteDetail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvWebsiteDetailTitle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/tvDeveloperDetailTitle"
-                style="@style/Theme.Gamesss.Section"
-                tools:text="www.website.com/games/game-name"/>
+            </com.ms.square.android.expandabletextview.ExpandableTextView>
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvDeveloperDetailTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvWebsiteDetail"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/tvDeveloperDetail"
-                android:text="@string/section_title_developers"
-                style="@style/Theme.Gamesss.SectionTitle"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvDeveloperDetail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvDeveloperDetailTitle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/tvPublisherDetailTitle"
-                tools:text="Developer 1, Developer 2, Developer 3"
-                style="@style/Theme.Gamesss.Section"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvPublisherDetailTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvDeveloperDetail"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/tvPublisherDetail"
-                android:text="@string/section_title_publishers"
-                style="@style/Theme.Gamesss.SectionTitle"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvPublisherDetail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvPublisherDetailTitle"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/tvAboutDetailTitle"
-                tools:text="Publisher 1, Publisher 2, Publisher 3"
-                style="@style/Theme.Gamesss.Section"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvAboutDetailTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvPublisherDetail"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/tvAboutDetail"
-                style="@style/Theme.Gamesss.SectionTitle"
-                android:text="@string/section_title_about"/>
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvAboutDetail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvAboutDetailTitle"
-                app:layout_constraintEnd_toEndOf="parent"
+            <ExpandableListView
+                android:id="@+id/elvDetail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null"
+                android:dividerHeight="5dp"
+                android:groupIndicator="@null"
                 app:layout_constraintBottom_toBottomOf="parent"
-                style="@style/Theme.Gamesss.Section.About"
-                tools:text="Lorem ipsum dol amet"/>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/etvAboutDetail"
+                tools:listheader="" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-        
+
     </androidx.core.widget.NestedScrollView>
+
+    <include
+        android:id="@+id/loadingDetail"
+        layout="@layout/loading"
+        android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

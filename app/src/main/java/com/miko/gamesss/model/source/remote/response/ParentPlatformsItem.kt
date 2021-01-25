@@ -7,6 +7,6 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class ParentPlatformsItem(
 
-	@field:SerializedName("platform")
-	val platform: Platform
+    @field:SerializedName("platform")
+    val platform: Platform
 ) : Parcelable
