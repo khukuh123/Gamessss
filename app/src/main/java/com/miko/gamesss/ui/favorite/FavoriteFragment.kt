@@ -9,8 +9,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.miko.gamesss.databinding.FragmentFavoriteBinding
-import com.miko.gamesss.model.GameList
-import com.miko.gamesss.viewmodel.ViewModelFactory
+import com.miko.gamesss.core.domain.model.GameList
+import com.miko.gamesss.core.ui.FavoriteAdapter
+import com.miko.gamesss.core.ui.ViewModelFactory
 
 class FavoriteFragment : Fragment() {
 

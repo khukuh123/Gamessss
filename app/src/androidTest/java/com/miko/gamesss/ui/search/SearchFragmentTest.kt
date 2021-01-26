@@ -15,10 +15,10 @@ import com.miko.gamesss.EspressoCustomMethod.typeSearchViewText
 import com.miko.gamesss.EspressoCustomMethod.withIndex
 import com.miko.gamesss.MainActivity
 import com.miko.gamesss.R
-import com.miko.gamesss.model.GameList
-import com.miko.gamesss.utils.EspressoIdlingResource
-import com.miko.gamesss.viewmodel.ViewModelFactory
-import com.miko.gamesss.vo.Status
+import com.miko.gamesss.core.domain.model.GameList
+import com.miko.gamesss.core.utils.EspressoIdlingResource
+import com.miko.gamesss.core.ui.ViewModelFactory
+import com.miko.gamesss.core.vo.Status
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

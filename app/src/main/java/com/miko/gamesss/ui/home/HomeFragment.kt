@@ -9,9 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.miko.gamesss.databinding.FragmentHomeBinding
-import com.miko.gamesss.model.GameList
-import com.miko.gamesss.viewmodel.ViewModelFactory
-import com.miko.gamesss.vo.Status
+import com.miko.gamesss.core.domain.model.GameList
+import com.miko.gamesss.core.ui.HomeAdapter
+import com.miko.gamesss.core.ui.ViewModelFactory
+import com.miko.gamesss.core.vo.Status
 
 class HomeFragment : Fragment() {
 

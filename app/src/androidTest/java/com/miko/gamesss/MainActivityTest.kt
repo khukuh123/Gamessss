@@ -11,7 +11,7 @@ import androidx.test.espresso.matcher.RootMatchers.withDecorView
 import androidx.test.espresso.matcher.ViewMatchers.*
 import com.miko.gamesss.EspressoCustomMethod.typeSearchViewText
 import com.miko.gamesss.EspressoCustomMethod.withIndex
-import com.miko.gamesss.utils.EspressoIdlingResource
+import com.miko.gamesss.core.utils.EspressoIdlingResource
 import org.hamcrest.CoreMatchers.not
 import org.junit.After
 import org.junit.Before

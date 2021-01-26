@@ -3,9 +3,9 @@ package com.miko.gamesss.ui.favorite
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.miko.gamesss.model.GameList
-import com.miko.gamesss.model.source.GamesRepository
-import com.miko.gamesss.utils.DataDummy
+import com.miko.gamesss.core.domain.model.GameList
+import com.miko.gamesss.core.data.GamesRepository
+import com.miko.gamesss.core.utils.DataDummy
 import com.nhaarman.mockitokotlin2.atLeastOnce
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Assert.assertEquals

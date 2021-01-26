@@ -2,13 +2,13 @@ package com.miko.gamesss.ui.favorite
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.miko.gamesss.model.GameList
-import com.miko.gamesss.model.source.GamesRepository
+import com.miko.gamesss.core.domain.model.GameList
+import com.miko.gamesss.core.domain.usecase.GamesUseCase
 
-class FavoriteViewModel(private val gamesRepository: GamesRepository) : ViewModel() {
-    fun getFavoriteGames(): LiveData<List<GameList>> = gamesRepository.getFavoriteGames()
+class FavoriteViewModel(private val gamesUseCase: GamesUseCase) : ViewModel() {
+    fun getFavoriteGames(): LiveData<List<GameList>> = gamesUseCase.getFavoriteGames()
 
     fun deleteFavoriteGame(gameId: Int) {
-        gamesRepository.deleteFavoriteGame(gameId)
+        gamesUseCase.deleteFavoriteGame(gameId)
     }
 }

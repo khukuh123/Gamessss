@@ -3,10 +3,10 @@ package com.miko.gamesss.ui.home
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
-import com.miko.gamesss.model.GameList
-import com.miko.gamesss.model.source.GamesRepository
-import com.miko.gamesss.utils.DataDummy
-import com.miko.gamesss.vo.Resource
+import com.miko.gamesss.core.domain.model.GameList
+import com.miko.gamesss.core.data.GamesRepository
+import com.miko.gamesss.core.utils.DataDummy
+import com.miko.gamesss.core.data.Resource
 import com.nhaarman.mockitokotlin2.atLeastOnce
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull

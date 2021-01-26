@@ -18,11 +18,11 @@ import com.miko.gamesss.EspressoCustomMethod.withCtlTitle
 import com.miko.gamesss.EspressoCustomMethod.withIndex
 import com.miko.gamesss.MainActivity
 import com.miko.gamesss.R
-import com.miko.gamesss.model.GameDetail
-import com.miko.gamesss.model.Section
-import com.miko.gamesss.utils.EspressoIdlingResource
-import com.miko.gamesss.viewmodel.ViewModelFactory
-import com.miko.gamesss.vo.Status
+import com.miko.gamesss.core.domain.model.GameDetail
+import com.miko.gamesss.core.domain.model.Section
+import com.miko.gamesss.core.utils.EspressoIdlingResource
+import com.miko.gamesss.core.ui.ViewModelFactory
+import com.miko.gamesss.core.vo.Status
 import org.hamcrest.CoreMatchers.*
 import org.junit.After
 import org.junit.Before

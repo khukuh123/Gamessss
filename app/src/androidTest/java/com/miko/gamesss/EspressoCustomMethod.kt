@@ -8,8 +8,8 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import com.miko.gamesss.model.Section
-import com.miko.gamesss.model.SectionItem
+import com.miko.gamesss.core.domain.model.Section
+import com.miko.gamesss.core.domain.model.SectionItem
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.Description
 import org.hamcrest.Matcher

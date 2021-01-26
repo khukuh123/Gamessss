@@ -15,9 +15,9 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.miko.gamesss.EspressoCustomMethod.clickViewInViewHolderWithId
 import com.miko.gamesss.MainActivity
 import com.miko.gamesss.R
-import com.miko.gamesss.model.GameList
-import com.miko.gamesss.utils.EspressoIdlingResource
-import com.miko.gamesss.viewmodel.ViewModelFactory
+import com.miko.gamesss.core.domain.model.GameList
+import com.miko.gamesss.core.utils.EspressoIdlingResource
+import com.miko.gamesss.core.ui.ViewModelFactory
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

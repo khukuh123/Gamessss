@@ -13,9 +13,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.appbar.AppBarLayout
 import com.miko.gamesss.R
 import com.miko.gamesss.databinding.ActivityDetailBinding
-import com.miko.gamesss.model.GameDetail
-import com.miko.gamesss.viewmodel.ViewModelFactory
-import com.miko.gamesss.vo.Status
+import com.miko.gamesss.core.domain.model.GameDetail
+import com.miko.gamesss.core.ui.DetailSectionAdapter
+import com.miko.gamesss.core.ui.ViewModelFactory
+import com.miko.gamesss.core.vo.Status
 
 class DetailActivity : AppCompatActivity() {
 
