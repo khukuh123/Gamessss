@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.miko.gamesss.ui.home.HomeFragment"
+        android:name="com.miko.gamesss.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
-        android:name="com.miko.gamesss.ui.search.SearchFragment"
+        android:name="com.miko.gamesss.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search">
         <action
@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.miko.gamesss.ui.favorite.FavoriteFragment"
+        android:name="com.miko.gamesss.favorite.FavoriteFragment"
         android:label="@string/title_favorite"
         tools:layout="@layout/fragment_favorite">
         <action
@@ -34,7 +34,7 @@
     </fragment>
     <activity
         android:id="@+id/detailActivity"
-        android:name="com.miko.gamesss.ui.detail.DetailActivity"
+        android:name="com.miko.gamesss.detail.DetailActivity"
         android:label="activity_detail"
         tools:layout="@layout/activity_detail">
         <argument

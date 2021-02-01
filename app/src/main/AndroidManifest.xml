@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
@@ -13,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Gamesss">
         <activity
-            android:name=".ui.detail.DetailActivity"
+            android:name="com.miko.gamesss.detail.DetailActivity"
             android:theme="@style/Theme.Gamesss.Detail" />
         <activity android:name=".MainActivity">
             <intent-filter>

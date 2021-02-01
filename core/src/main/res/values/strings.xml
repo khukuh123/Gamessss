@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="game_image">Game Image</string>
+    <string name="clear_button">Clear Button</string>
+    <string name="section_title">Section Title</string>
+
+</resources>

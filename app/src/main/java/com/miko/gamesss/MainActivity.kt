@@ -18,8 +18,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.miko.gamesss.databinding.ActivityMainBinding
-import com.miko.gamesss.ui.favorite.FavoriteFragment
-import com.miko.gamesss.ui.search.SearchFragment
+import com.miko.gamesss.favorite.FavoriteFragment
+import com.miko.gamesss.search.SearchFragment
 
 class MainActivity : AppCompatActivity() {
     private var binding: ActivityMainBinding? = null
