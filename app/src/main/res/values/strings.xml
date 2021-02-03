@@ -8,8 +8,5 @@
     <string name="result">RESULT</string>
     <string name="favorite_button">Favorite Button</string>
     <string name="show_more">Show More</string>
-    <string name="section_title">Section Title</string>
     <string name="favorite">Favorite</string>
-    <string name="clear_button">Clear Button</string>
-    <string name="delete_favorite">Delete Favorite</string>
 </resources>

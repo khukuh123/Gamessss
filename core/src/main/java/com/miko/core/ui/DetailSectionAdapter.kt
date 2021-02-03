@@ -52,6 +52,7 @@ class DetailSectionAdapter(private val titles: List<Section>) : BaseExpandableLi
         val parentHolder: ParentHolder?
         val section = getGroup(groupPosition) as Section
         var mConvertView = convertView
+
         bindingItemParent =
             ItemParentBinding.inflate(LayoutInflater.from(parent?.context), parent, false)
 
@@ -84,13 +85,14 @@ class DetailSectionAdapter(private val titles: List<Section>) : BaseExpandableLi
         parent: ViewGroup?
     ): View {
         val childHolder: ChildHolder?
+        val section = getGroup(groupPosition) as Section
         var mConvertView = convertView
+
         bindingItemGroup = ItemGroupChildBinding.inflate(
             LayoutInflater.from(parent?.context),
             parent,
             false
         )
-        val section = getGroup(groupPosition) as Section
 
         if (mConvertView != null) {
             mConvertView.tag as ChildHolder
@@ -105,6 +107,7 @@ class DetailSectionAdapter(private val titles: List<Section>) : BaseExpandableLi
             LinearLayoutManager.HORIZONTAL,
             false
         )
+
         detailSectionItemAdapter = DetailSectionItemAdapter(section.listItem)
         ChildHolder.horizontalListView = mConvertView?.findViewById(R.id.rvDetail) as RecyclerView
         ChildHolder.horizontalListView?.run {

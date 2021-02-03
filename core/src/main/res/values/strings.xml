@@ -3,5 +3,6 @@
     <string name="game_image">Game Image</string>
     <string name="clear_button">Clear Button</string>
     <string name="section_title">Section Title</string>
+    <string name="delete_favorite">Delete Favorite</string>
 
 </resources>

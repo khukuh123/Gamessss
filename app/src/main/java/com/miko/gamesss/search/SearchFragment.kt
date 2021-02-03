@@ -72,6 +72,12 @@ class SearchFragment : Fragment() {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+        adapter?.destroy()
+    }
+
     private fun showLoadingScreen(visible: Boolean) {
         binding?.run {
             loadingSearch.root.visibility = if (visible) View.VISIBLE else View.GONE
@@ -92,12 +98,6 @@ class SearchFragment : Fragment() {
         binding?.run {
             rvSearch.adapter = adapter
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
-        adapter?.destroy()
     }
 
 }

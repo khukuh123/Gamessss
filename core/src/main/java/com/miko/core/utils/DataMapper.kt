@@ -23,41 +23,42 @@ object DataMapper {
     fun fromGameEntityToGameDetail(gameEntity: GameEntity): GameDetail {
         val listSection = ArrayList<Section>()
         val releasedDate = stringToListOfSectionItem(gameEntity.released)
+        val website = stringToListOfSectionItem(gameEntity.website)
+        val playtime = listOf(SectionItem("${gameEntity.playtime} Hour"))
+        val listPlatforms = stringToListOfSectionItem(gameEntity.platforms)
+        val listDevelopers = stringToListOfSectionItem(gameEntity.developers)
+        val listPublishers = stringToListOfSectionItem(gameEntity.publishers)
+
         listSection.add(
             Section(
                 "Released Date",
                 releasedDate
             )
         )
-        val website = stringToListOfSectionItem(gameEntity.website)
         listSection.add(
             Section(
                 "Website",
                 website
             )
         )
-        val playtime = listOf(SectionItem("${gameEntity.playtime} Hour"))
         listSection.add(
             Section(
                 "Average Playtime",
                 playtime
             )
         )
-        val listPlatforms = stringToListOfSectionItem(gameEntity.platforms)
         listSection.add(
             Section(
                 "Platforms",
                 listPlatforms
             )
         )
-        val listDevelopers = stringToListOfSectionItem(gameEntity.developers)
         listSection.add(
             Section(
                 "Developers",
                 listDevelopers
             )
         )
-        val listPublishers = stringToListOfSectionItem(gameEntity.publishers)
         listSection.add(
             Section(
                 "Publishers",
@@ -117,6 +118,7 @@ object DataMapper {
 
     fun fromGameListResponseToGameEntities(oldData: GameListResponse): List<GameEntity> {
         val newData = mutableListOf<GameEntity>()
+
         for (i in oldData.results) {
             newData.add(
                 GameEntity(
@@ -132,32 +134,32 @@ object DataMapper {
 
     private fun responseListToString(list: List<Any>): String {
         var result = "["
-        for (i in list.indices) {
-            var item = list[i]
-            lateinit var string: String
-            when (item::class) {
-                GenresItem::class -> {
-                    item = item as GenresItem
-                    string = item.name
+        if (list.indices.isEmpty()) {
+            return ""
+        } else {
+            for (i in list.indices) {
+                val item = list[i]
+                lateinit var string: String
+                when (item) {
+                    is GenresItem -> {
+                        string = item.name
+                    }
+                    is PublishersItem -> {
+                        string = item.name
+                    }
+                    is DevelopersItem -> {
+                        string = item.name
+                    }
+                    is ParentPlatformsItem -> {
+                        string = item.platform.name
+                    }
+                    else -> Throwable("Class not found ${item.javaClass}")
                 }
-                PublishersItem::class -> {
-                    item = item as PublishersItem
-                    string = item.name
+                result += if (i != list.lastIndex) {
+                    "$string, "
+                } else {
+                    "$string]"
                 }
-                DevelopersItem::class -> {
-                    item = item as DevelopersItem
-                    string = item.name
-                }
-                ParentPlatformsItem::class -> {
-                    item = item as ParentPlatformsItem
-                    string = item.platform.name
-                }
-                else -> Throwable("Class not found ${item.javaClass}")
-            }
-            result += if (i != list.lastIndex) {
-                "$string, "
-            } else {
-                "$string]"
             }
         }
 

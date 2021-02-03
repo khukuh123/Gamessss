@@ -16,4 +16,5 @@ interface ApiService {
 
     @GET("games/{id}")
     suspend fun getGameDetail(@Path("id") id: String): GameDetailResponse
+
 }

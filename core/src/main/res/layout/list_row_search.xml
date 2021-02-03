@@ -8,8 +8,8 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cvSearchGameImageRow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="112dp"
+        android:layout_height="112dp"
         android:layout_margin="8dp"
         app:cardCornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,36 +19,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ImageView
+            android:id="@+id/ivSearchGameImageRow"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:contentDescription="@string/game_image"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/ic_image" />
 
-            <ImageView
-                android:id="@+id/ivSearchGameImageRow"
-                android:layout_width="112dp"
-                android:layout_height="112dp"
-                android:contentDescription="@string/game_image"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_image" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tvSearchGameRatingRow"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@color/transparentBlack"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:text="4.5★" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tvSearchGameRatingRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@color/transparentBlack"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            tools:text="4.5★" />
 
     </com.google.android.material.card.MaterialCardView>
 

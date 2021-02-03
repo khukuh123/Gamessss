@@ -24,11 +24,13 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater)
+
         return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         homeViewModel.setGameList()
         homeViewModel.getGameList().observe(viewLifecycleOwner, { result ->
             if (result != null) {
@@ -36,11 +38,13 @@ class HomeFragment : Fragment() {
                     is Resource.Loading -> {
                         showLoadingScreen(true)
                     }
+
                     is Resource.Error -> {
                         showLoadingScreen(false)
                         updateRecyclerList(result.data as List<GameList>)
                         Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
                     }
+
                     is Resource.Success -> {
                         showLoadingScreen(false)
                         updateRecyclerList(result.data as List<GameList>)
@@ -48,6 +52,12 @@ class HomeFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
+        adapter?.destroy()
     }
 
     private fun showLoadingScreen(visible: Boolean) {
@@ -62,22 +72,16 @@ class HomeFragment : Fragment() {
             override fun onItemClicked(gameList: GameList) {
                 val toDetailActivity =
                     HomeFragmentDirections.actionHomeFragmentToDetailActivity(gameList.id)
+
                 view?.findNavController()?.navigate(toDetailActivity)
             }
 
         })
+
         binding?.run {
             rvHome.setHasFixedSize(true)
             rvHome.adapter = adapter
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        if (binding != null) {
-            binding = null
-        }
-        adapter?.destroy()
     }
 
 }

@@ -1,4 +1,4 @@
-package com.miko.gamesss.favorite
+package com.miko.favorite
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,8 +9,10 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.miko.core.domain.model.GameList
 import com.miko.core.ui.FavoriteAdapter
-import com.miko.gamesss.databinding.FragmentFavoriteBinding
+import com.miko.favorite.databinding.FragmentFavoriteBinding
+import com.miko.favorite.di.favoriteModule
 import org.koin.android.viewmodel.ext.android.viewModel
+import org.koin.core.context.loadKoinModules
 
 class FavoriteFragment : Fragment() {
 
@@ -24,6 +26,7 @@ class FavoriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentFavoriteBinding.inflate(inflater)
+        loadKoinModules(favoriteModule)
         return binding?.root
     }
 
@@ -40,45 +43,56 @@ class FavoriteFragment : Fragment() {
         adapter = FavoriteAdapter(arrayListOf())
 
         binding?.run {
-            rvFavorite.setHasFixedSize(true)
             val mLayoutManager = LinearLayoutManager(requireContext())
-            rvFavorite.layoutManager = mLayoutManager
+
+            with(rvFavorite) {
+                setHasFixedSize(true)
+                layoutManager = mLayoutManager
+            }
             favoriteViewModel.getFavoriteGames().observe(viewLifecycleOwner, { data ->
                 updateRecyclerList(ArrayList(data))
             })
+            btnDelete.setOnClickListener {
+                updateList()
+            }
         }
-    }
-
-    fun updateList() {
-        adapter?.clearButtonState = !clearButtonState
-        favoriteViewModel.getFavoriteGames().observe(viewLifecycleOwner, { data ->
-            updateRecyclerList(ArrayList(data))
-        })
-        clearButtonState = !clearButtonState
-    }
-
-    private fun updateRecyclerList(gameLists: ArrayList<GameList>) {
-        adapter?.setGameLists(gameLists)
-        adapter?.setOnClickCallback(object : FavoriteAdapter.OnClickCallback {
-            override fun onItemClicked(gameList: GameList) {
-                val toDetailActivity =
-                    FavoriteFragmentDirections.actionFavoriteFragmentToDetailActivity(gameList.id)
-                view?.findNavController()?.navigate(toDetailActivity)
-            }
-
-            override fun onClearButtonClicked(gameList: GameList) {
-                favoriteViewModel.deleteFavoriteGame(gameList.id)
-                favoriteViewModel.getFavoriteGames().observe(viewLifecycleOwner, { data ->
-                    updateRecyclerList(ArrayList(data))
-                })
-            }
-        })
-        binding?.rvFavorite?.adapter = adapter
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
         adapter?.destroy()
+    }
+
+    private fun updateList() {
+        adapter?.clearButtonState = !clearButtonState
+        favoriteViewModel.getFavoriteGames().observe(viewLifecycleOwner, { data ->
+            updateRecyclerList(ArrayList(data))
+        })
+
+        clearButtonState = !clearButtonState
+    }
+
+    private fun updateRecyclerList(gameLists: ArrayList<GameList>) {
+        adapter?.run {
+            setGameLists(gameLists)
+            setOnClickCallback(object : FavoriteAdapter.OnClickCallback {
+                override fun onItemClicked(gameList: GameList) {
+                    val toDetailActivity =
+                        FavoriteFragmentDirections.actionFavoriteFragmentToDetailActivity(gameList.id)
+
+                    view?.findNavController()?.navigate(toDetailActivity)
+                }
+
+                override fun onClearButtonClicked(gameList: GameList) {
+                    favoriteViewModel.deleteFavoriteGame(gameList.id)
+                    favoriteViewModel.getFavoriteGames().observe(viewLifecycleOwner, { data ->
+                        updateRecyclerList(ArrayList(data))
+                    })
+                }
+            })
+        }
+
+        binding?.rvFavorite?.adapter = adapter
     }
 }

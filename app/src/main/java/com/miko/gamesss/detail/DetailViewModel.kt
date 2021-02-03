@@ -11,9 +11,8 @@ class DetailViewModel(private val gamesUseCase: GamesUseCase) : ViewModel() {
     fun getGameDetail(id: String): LiveData<Resource<GameDetail>> =
         gamesUseCase.getDetailGame(id).asLiveData()
 
-    fun setFavoriteState(id: Int, isFavorite: Boolean) {
+    fun setFavoriteState(id: Int, isFavorite: Boolean) =
         gamesUseCase.setFavoriteState(id, isFavorite)
-    }
 
     fun checkGameFavoriteStatus(id: Int): LiveData<List<GameDetail>> =
         gamesUseCase.checkFavoriteStatus(id).asLiveData()

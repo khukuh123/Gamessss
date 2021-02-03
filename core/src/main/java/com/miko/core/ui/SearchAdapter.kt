@@ -15,11 +15,12 @@ class SearchAdapter(private val gameLists: ArrayList<GameList>) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(gameList: GameList) {
             with(binding) {
+                val rating = "${String.format("%.1f", gameList.rating)} ★"
+
                 Glide.with(root.context).load(gameList.image).apply(
                     RequestOptions().error(R.drawable.ic_image)
                 ).into(ivSearchGameImageRow)
                 tvSearchGameNameRow.text = gameList.name
-                val rating = "${String.format("%.1f", gameList.rating)} ★"
                 tvSearchGameRatingRow.text = rating
             }
         }

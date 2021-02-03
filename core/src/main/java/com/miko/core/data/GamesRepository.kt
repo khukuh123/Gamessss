@@ -10,7 +10,6 @@ import com.miko.core.domain.model.GameList
 import com.miko.core.domain.repository.IGamesRepository
 import com.miko.core.utils.AppExecutors
 import com.miko.core.utils.DataMapper
-import com.miko.core.utils.EspressoIdlingResource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -22,43 +21,29 @@ class GamesRepository(
 
     override fun getListGame(): Flow<Resource<List<GameList>>> {
         return object : NetworkBoundResource<List<GameList>, GameListResponse>() {
-            override fun loadFromDB(): Flow<List<GameList>> {
-                if (EspressoIdlingResource.espressoTestIdlingResource.isIdleNow) {
-                    EspressoIdlingResource.increment()
-                } else {
-                    EspressoIdlingResource.decrement()
-                }
-                return localDataSource.getTopList().map {
+            override fun loadFromDB(): Flow<List<GameList>> =
+                localDataSource.getTopList().map {
                     DataMapper.fromGameEntitiesToGameLists(it)
                 }
-            }
 
-            override fun shouldFetch(data: List<GameList>?): Boolean {
-                return data.isNullOrEmpty()
-            }
+            override fun shouldFetch(data: List<GameList>?): Boolean =
+                data.isNullOrEmpty()
 
             override suspend fun createCall(): Flow<ApiResponse<GameListResponse>> =
                 remoteDataSource.getListGame()
 
-            override suspend fun saveCallResult(data: GameListResponse) {
+            override suspend fun saveCallResult(data: GameListResponse) =
                 localDataSource.insertGameEntity(DataMapper.fromGameListResponseToGameEntities(data))
-            }
 
         }.asFlow()
     }
 
     override fun searchGame(query: String): Flow<Resource<List<GameList>>> {
         return object : NetworkBoundResource<List<GameList>, GameListResponse>() {
-            override fun loadFromDB(): Flow<List<GameList>> {
-                if (EspressoIdlingResource.espressoTestIdlingResource.isIdleNow) {
-                    EspressoIdlingResource.increment()
-                } else {
-                    EspressoIdlingResource.decrement()
-                }
-                return localDataSource.searchGame(query).map {
+            override fun loadFromDB(): Flow<List<GameList>> =
+                localDataSource.searchGame(query).map {
                     DataMapper.fromGameEntitiesToGameLists(it)
                 }
-            }
 
             override fun shouldFetch(data: List<GameList>?): Boolean {
                 val dataSize = data?.size ?: 0
@@ -68,42 +53,35 @@ class GamesRepository(
             override suspend fun createCall(): Flow<ApiResponse<GameListResponse>> =
                 remoteDataSource.searchGame(query)
 
-            override suspend fun saveCallResult(data: GameListResponse) {
+            override suspend fun saveCallResult(data: GameListResponse) =
                 localDataSource.insertGameEntity(DataMapper.fromGameListResponseToGameEntities(data))
-            }
 
         }.asFlow()
     }
 
     override fun getDetailGame(id: String): Flow<Resource<GameDetail>> {
         return object : NetworkBoundResource<GameDetail, GameDetailResponse>() {
-            override fun loadFromDB(): Flow<GameDetail> {
-                if (EspressoIdlingResource.espressoTestIdlingResource.isIdleNow) {
-                    EspressoIdlingResource.increment()
-                } else {
-                    EspressoIdlingResource.decrement()
-                }
-                return localDataSource.getGameDetail(id).map {
+            override fun loadFromDB(): Flow<GameDetail> =
+                localDataSource.getGameDetail(id).map {
                     DataMapper.fromGameEntityToGameDetail(it)
                 }
-            }
 
-            override fun shouldFetch(data: GameDetail?): Boolean {
-                return data?.description?.isEmpty() as Boolean
-            }
+            override fun shouldFetch(data: GameDetail?): Boolean =
+                data?.description?.isEmpty() as Boolean
 
             override suspend fun createCall(): Flow<ApiResponse<GameDetailResponse>> =
                 remoteDataSource.getGameDetail(id)
 
-            override suspend fun saveCallResult(data: GameDetailResponse) {
+            override suspend fun saveCallResult(data: GameDetailResponse) =
                 localDataSource.insertGameDetail(DataMapper.fromGameDetailResponseToGameEntity(data))
-            }
+
         }.asFlow()
     }
 
     override fun insertFavoriteGame(id: Int) {
+        val gameFavorite = DataMapper.fromGameIdToFavoriteGame(id)
         appExecutors.diskIO().execute {
-            localDataSource.insertFavoriteGame(DataMapper.fromGameIdToFavoriteGame(id))
+            localDataSource.insertFavoriteGame(gameFavorite)
         }
     }
 

@@ -15,6 +15,8 @@ class HomeAdapter(private val gameLists: ArrayList<GameList>) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(gameList: GameList, onItemClickCallback: OnItemClickCallback) {
             with(binding) {
+                val rating = "${String.format("%.1f", gameList.rating)} ★"
+
                 Glide.with(root).load(gameList.image).apply(
                     RequestOptions().error(R.drawable.ic_image)
                 ).into(ivGameImageRow)
@@ -22,7 +24,6 @@ class HomeAdapter(private val gameLists: ArrayList<GameList>) :
                     onItemClickCallback.onItemClicked(gameList)
                 }
                 tvGameNameRow.text = gameList.name
-                val rating = "${String.format("%.1f", gameList.rating)} ★"
                 tvRatingRow.text = rating
             }
         }

@@ -1,4 +1,4 @@
-package com.miko.gamesss.favorite
+package com.miko.favorite
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel

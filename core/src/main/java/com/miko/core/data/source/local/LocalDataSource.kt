@@ -38,4 +38,5 @@ class LocalDataSource(private val gamesDao: GamesDao) {
     fun deleteFavoriteGame(gameFavorite: GameFavorite) {
         gamesDao.deleteFavoriteGame(gameFavorite)
     }
+
 }

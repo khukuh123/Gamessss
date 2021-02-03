@@ -34,4 +34,5 @@ interface GamesDao {
 
     @Query("SELECT * FROM gamesFavorite WHERE gameId = :id")
     fun checkFavoriteStatus(id: Int): Flow<List<GameFavorite>>
+
 }

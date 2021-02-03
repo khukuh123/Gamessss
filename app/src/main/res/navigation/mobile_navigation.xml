@@ -10,37 +10,49 @@
         android:name="com.miko.gamesss.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home">
+
         <action
             android:id="@+id/action_homeFragment_to_detailActivity"
             app:destination="@id/detailActivity" />
+
     </fragment>
+
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.miko.gamesss.search.SearchFragment"
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search">
-        <action
+
+    <action
             android:id="@+id/action_searchFragment_to_detailActivity"
             app:destination="@id/detailActivity" />
+
     </fragment>
+
     <fragment
         android:id="@+id/favoriteFragment"
-        android:name="com.miko.gamesss.favorite.FavoriteFragment"
+        android:name="com.miko.favorite.FavoriteFragment"
         android:label="@string/title_favorite"
+        app:moduleName="favorite"
         tools:layout="@layout/fragment_favorite">
+
         <action
             android:id="@+id/action_favoriteFragment_to_detailActivity"
             app:destination="@id/detailActivity" />
+
     </fragment>
+
     <activity
         android:id="@+id/detailActivity"
         android:name="com.miko.gamesss.detail.DetailActivity"
         android:label="activity_detail"
         tools:layout="@layout/activity_detail">
-        <argument
+
+    <argument
             android:name="gameId"
             android:defaultValue="0"
             app:argType="integer" />
+
     </activity>
 
 </navigation>

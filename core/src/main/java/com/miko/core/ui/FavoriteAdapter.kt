@@ -21,6 +21,7 @@ class FavoriteAdapter(private val gameLists: ArrayList<GameList>) :
         ) {
             binding.run {
                 val rating = "${String.format("%.1f", gameList.rating)} ★"
+
                 tvFavoriteGameRatingRow.text = rating
                 tvFavoriteGameNameRow.text = gameList.name
                 Glide.with(binding.root.context).load(gameList.image)
