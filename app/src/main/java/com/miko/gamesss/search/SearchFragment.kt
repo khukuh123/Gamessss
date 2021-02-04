@@ -62,7 +62,7 @@ class SearchFragment : Fragment() {
 
                             is Resource.Error -> {
                                 showLoadingScreen(false)
-                                Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT)
+                                Toast.makeText(requireContext(), result.message, Toast.LENGTH_LONG)
                                     .show()
                             }
                         }

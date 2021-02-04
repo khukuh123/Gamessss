@@ -41,7 +41,7 @@ class HomeFragment : Fragment() {
 
                     is Resource.Error -> {
                         showLoadingScreen(false)
-                        Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), result.message, Toast.LENGTH_LONG).show()
                     }
 
                     is Resource.Success -> {

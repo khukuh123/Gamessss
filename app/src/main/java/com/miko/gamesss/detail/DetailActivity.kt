@@ -50,7 +50,7 @@ class DetailActivity : AppCompatActivity() {
                     }
 
                     is Resource.Error -> {
-                        Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, result.message, Toast.LENGTH_LONG).show()
                         showLoadingScreen(false)
                     }
 
