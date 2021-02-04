@@ -41,7 +41,6 @@ class HomeFragment : Fragment() {
 
                     is Resource.Error -> {
                         showLoadingScreen(false)
-                        updateRecyclerList(result.data as List<GameList>)
                         Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT).show()
                     }
 

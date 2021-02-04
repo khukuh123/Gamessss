@@ -55,13 +55,13 @@ class SearchFragment : Fragment() {
                                 updateRecyclerList(ArrayList(data))
                                 showLoadingScreen(false)
                             }
+
                             is Resource.Loading -> {
                                 showLoadingScreen(true)
                             }
+
                             is Resource.Error -> {
                                 showLoadingScreen(false)
-                                val data = result.data as List<GameList>
-                                updateRecyclerList(ArrayList(data))
                                 Toast.makeText(requireContext(), result.message, Toast.LENGTH_SHORT)
                                     .show()
                             }

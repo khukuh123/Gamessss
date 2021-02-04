@@ -50,12 +50,6 @@ class DetailActivity : AppCompatActivity() {
                     }
 
                     is Resource.Error -> {
-                        gameDetail = result.data
-
-                        if (gameDetail != null) {
-                            setGameDetail(gameDetail)
-                        }
-
                         Toast.makeText(this, result.message, Toast.LENGTH_SHORT).show()
                         showLoadingScreen(false)
                     }
