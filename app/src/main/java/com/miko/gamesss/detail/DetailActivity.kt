@@ -123,7 +123,7 @@ class DetailActivity : AppCompatActivity() {
         if (isNotInstalled) {
             Toast.makeText(
                 this@DetailActivity,
-                "Please Install Favorite module first.",
+                "Favorite Module not found",
                 Toast.LENGTH_SHORT
             ).show()
         }
