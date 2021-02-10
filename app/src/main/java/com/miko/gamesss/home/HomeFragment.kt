@@ -28,9 +28,15 @@ class HomeFragment : Fragment() {
         return binding?.root
     }
 
+    override fun onResume() {
+        super.onResume()
+        homeViewModel.setGameList()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding?.rvHome?.setHasFixedSize(true)
         homeViewModel.setGameList()
         homeViewModel.getGameList().observe(viewLifecycleOwner, { result ->
             if (result != null) {
@@ -78,7 +84,6 @@ class HomeFragment : Fragment() {
         })
 
         binding?.run {
-            rvHome.setHasFixedSize(true)
             rvHome.adapter = adapter
         }
     }

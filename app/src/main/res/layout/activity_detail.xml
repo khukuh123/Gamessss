@@ -69,13 +69,33 @@
                 android:id="@+id/tvRatingDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
                 android:textColor="@color/white"
                 android:textSize="28sp"
                 app:layout_constraintBottom_toTopOf="@id/tvGenresDetail"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/tvMetaCriticDetail"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="4.2★" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tvMetaCriticDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/round_corner"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/tvRatingDetail"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tvRatingDetail"
+                app:layout_constraintTop_toTopOf="@id/tvRatingDetail"
+                tools:text="78" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tvGenresDetail"

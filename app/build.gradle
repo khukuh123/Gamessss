@@ -39,7 +39,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    dynamicFeatures = [':favorite']
+    dynamicFeatures = [':favorite', ':browse']
 }
 
 dependencies {
@@ -47,6 +47,7 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
     api "androidx.navigation:navigation-fragment-ktx:$navVersion"
     api "androidx.navigation:navigation-ui-ktx:$navVersion"
     api "androidx.navigation:navigation-dynamic-features-fragment:$navVersion"

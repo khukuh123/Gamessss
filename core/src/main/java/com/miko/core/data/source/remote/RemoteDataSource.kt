@@ -25,7 +25,7 @@ class RemoteDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    fun getListGame(): Flow<ApiResponse<GameListResponse>> {
+    suspend fun getListGame(): Flow<ApiResponse<GameListResponse>> {
         return flow {
             try {
                 val response = apiService.getGameList()
@@ -42,10 +42,44 @@ class RemoteDataSource(private val apiService: ApiService) {
         }.flowOn(Dispatchers.IO)
     }
 
-    fun searchGame(query: String): Flow<ApiResponse<GameListResponse>> {
+    suspend fun searchGame(query: String): Flow<ApiResponse<GameListResponse>> {
         return flow {
             try {
                 val response = apiService.getGameList(query)
+
+                if (response.results.isNotEmpty()) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.d("RemoteDataSource", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getGameListReleased(date: String): Flow<ApiResponse<GameListResponse>> {
+        return flow {
+            try {
+                val response = apiService.getGameListReleased(date)
+
+                if (response.results.isNotEmpty()) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (e: Exception) {
+                emit(ApiResponse.Error(e.toString()))
+                Log.d("RemoteDataSource", e.toString())
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    suspend fun getGameListMetaCritic(): Flow<ApiResponse<GameListResponse>> {
+        return flow {
+            try {
+                val response = apiService.getGameListMetaCritic()
 
                 if (response.results.isNotEmpty()) {
                     emit(ApiResponse.Success(response))

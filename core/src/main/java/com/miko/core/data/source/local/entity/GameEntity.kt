@@ -21,6 +21,8 @@ data class GameEntity(
     val website: String = "",
     @ColumnInfo(name = "rating")
     val rating: Double = 0.0,
+    @ColumnInfo(name = "metaCritic")
+    val metaCritic: Int = 0,
     @ColumnInfo(name = "playtime")
     val playtime: Int = -1,
     @ColumnInfo(name = "platforms")

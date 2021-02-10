@@ -138,6 +138,7 @@ class DetailActivity : AppCompatActivity() {
             ctlDetail.title = gameDetail.name
             val rating = "${String.format("%.1f", gameDetail.rating)} ★"
             tvRatingDetail.text = rating
+            tvMetaCriticDetail.text = gameDetail.metaCritic.toString()
             tvGenresDetail.text = gameDetail.genres
             Glide.with(this@DetailActivity).load(gameDetail.backgroundImage).apply(
                 RequestOptions().error(

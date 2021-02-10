@@ -20,4 +20,6 @@ interface GamesUseCase {
     fun deleteFavoriteGame(gameId: Int)
 
     fun setFavoriteState(id: Int, isFavorite: Boolean)
+
+    fun getGameListSorted(type: Int): Flow<Resource<out List<GameList>>>
 }

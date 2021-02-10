@@ -23,7 +23,7 @@
         android:label="@string/title_search"
         tools:layout="@layout/fragment_search">
 
-    <action
+        <action
             android:id="@+id/action_searchFragment_to_detailActivity"
             app:destination="@id/detailActivity" />
 
@@ -42,13 +42,24 @@
 
     </fragment>
 
+    <fragment
+        android:id="@+id/browseFragment"
+        android:name="com.miko.browse.BrowseFragment"
+        android:label="Browse"
+        app:moduleName="browse"
+        tools:layout="@layout/fragment_browse">
+        <action
+            android:id="@+id/action_browseFragment2_to_detailActivity"
+            app:destination="@id/detailActivity" />
+    </fragment>
+
     <activity
         android:id="@+id/detailActivity"
         android:name="com.miko.gamesss.detail.DetailActivity"
         android:label="activity_detail"
         tools:layout="@layout/activity_detail">
 
-    <argument
+        <argument
             android:name="gameId"
             android:defaultValue="0"
             app:argType="integer" />

@@ -13,6 +13,24 @@ import kotlin.collections.ArrayList
 
 object DataMapper {
 
+    fun fromGameListResponseToGameList(oldData: GameListResponse): List<GameList> {
+        val newData = mutableListOf<GameList>()
+
+        oldData.results.forEach {
+            newData.add(
+                GameList(
+                    it.id,
+                    it.name,
+                    it.rating,
+                    it.backgroundImage ?: "",
+                    it.metacritic
+                )
+            )
+        }
+
+        return newData
+    }
+
     fun fromGameFavoritesToGameDetails(gameFavorite: List<GameFavorite>): List<GameDetail> =
         gameFavorite.map {
             GameDetail()
@@ -20,14 +38,15 @@ object DataMapper {
 
     fun fromGameIdToFavoriteGame(gameId: Int): GameFavorite = GameFavorite(gameId)
 
-    fun fromGameEntityToGameDetail(gameEntity: GameEntity): GameDetail {
+    fun fromGameEntityToGameDetail(gameEntity: GameEntity?): GameDetail {
         val listSection = ArrayList<Section>()
-        val releasedDate = stringToListOfSectionItem(gameEntity.released)
-        val website = stringToListOfSectionItem(gameEntity.website)
-        val playtime = listOf(SectionItem("${gameEntity.playtime} Hour"))
-        val listPlatforms = stringToListOfSectionItem(gameEntity.platforms)
-        val listDevelopers = stringToListOfSectionItem(gameEntity.developers)
-        val listPublishers = stringToListOfSectionItem(gameEntity.publishers)
+        val notNullGameEntity = gameEntity ?: GameEntity()
+        val releasedDate = stringToListOfSectionItem(notNullGameEntity.released)
+        val website = stringToListOfSectionItem(notNullGameEntity.website)
+        val playtime = listOf(SectionItem("${notNullGameEntity.playtime} Hour"))
+        val listPlatforms = stringToListOfSectionItem(notNullGameEntity.platforms)
+        val listDevelopers = stringToListOfSectionItem(notNullGameEntity.developers)
+        val listPublishers = stringToListOfSectionItem(notNullGameEntity.publishers)
 
         listSection.add(
             Section(
@@ -66,11 +85,12 @@ object DataMapper {
             )
         )
         return GameDetail(
-            gameEntity.name,
-            gameEntity.rating,
-            gameEntity.genres.removeSurrounding("[", "]"),
-            gameEntity.description,
-            gameEntity.backgroundImage,
+            notNullGameEntity.name,
+            notNullGameEntity.rating,
+            notNullGameEntity.metaCritic,
+            notNullGameEntity.genres.removeSurrounding("[", "]"),
+            notNullGameEntity.description,
+            notNullGameEntity.backgroundImage,
             listSection
         )
     }
@@ -107,6 +127,7 @@ object DataMapper {
             oldData.backgroundImage ?: "",
             "[${oldData.website}]",
             oldData.rating,
+            oldData.metaCritic ?: 0,
             oldData.playtime,
             responseListToString(oldData.parentPlatforms),
             responseListToString(oldData.genres),
@@ -125,6 +146,7 @@ object DataMapper {
                     id = i.id,
                     name = i.name,
                     rating = i.rating,
+                    metaCritic = i.metacritic,
                     backgroundImage = i.backgroundImage ?: ""
                 )
             )
@@ -133,7 +155,7 @@ object DataMapper {
     }
 
     private fun responseListToString(list: List<Any>): String {
-        var result = "["
+        val result = StringBuilder("[")
         if (list.indices.isEmpty()) {
             return ""
         } else {
@@ -155,15 +177,17 @@ object DataMapper {
                     }
                     else -> Throwable("Class not found ${item.javaClass}")
                 }
-                result += if (i != list.lastIndex) {
-                    "$string, "
-                } else {
-                    "$string]"
-                }
+                result.append(
+                    if (i != list.lastIndex) {
+                        "$string, "
+                    } else {
+                        "$string]"
+                    }
+                )
             }
         }
 
-        return result
+        return result.toString()
     }
 
     private fun stringToListOfSectionItem(string: String): List<SectionItem> {

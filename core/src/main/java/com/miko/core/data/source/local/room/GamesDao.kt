@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface GamesDao {
 
-    @Query("SELECT * FROM gameEntities ORDER BY rating DESC LIMIT 10")
+    @Query("SELECT * FROM gameEntities ORDER BY metaCritic DESC LIMIT 10")
     fun getTopList(): Flow<List<GameEntity>>
 
     @Query("SELECT * FROM gameEntities WHERE name LIKE :query")

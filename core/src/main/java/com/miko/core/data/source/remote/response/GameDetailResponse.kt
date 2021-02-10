@@ -1,10 +1,7 @@
 package com.miko.core.data.source.remote.response
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
 data class GameDetailResponse(
 
     @field:SerializedName("background_image")
@@ -31,6 +28,9 @@ data class GameDetailResponse(
     @field:SerializedName("id")
     val id: Int,
 
+    @field:SerializedName("metacritic")
+    val metaCritic: Int?,
+
     @field:SerializedName("playtime")
     val playtime: Int,
 
@@ -42,4 +42,4 @@ data class GameDetailResponse(
 
     @field:SerializedName("released")
     val released: String?
-) : Parcelable
+)

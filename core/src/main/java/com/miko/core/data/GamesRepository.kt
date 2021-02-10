@@ -11,6 +11,8 @@ import com.miko.core.domain.repository.IGamesRepository
 import com.miko.core.utils.AppExecutors
 import com.miko.core.utils.DataMapper
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 class GamesRepository(
@@ -99,6 +101,40 @@ class GamesRepository(
         val gameFavorite = DataMapper.fromGameIdToFavoriteGame(gameId)
         appExecutors.diskIO().execute {
             localDataSource.deleteFavoriteGame(gameFavorite)
+        }
+    }
+
+    override fun getGameListReleased(date: String): Flow<Resource<out List<GameList>>> {
+        return flow {
+            emit(Resource.Loading(null))
+
+            when (val result = remoteDataSource.getGameListReleased(date).first()) {
+                is ApiResponse.Success ->
+                    emit(Resource.Success(DataMapper.fromGameListResponseToGameList(result.data)))
+
+                is ApiResponse.Empty ->
+                    emit(Resource.Success(listOf<GameList>()))
+
+                is ApiResponse.Error ->
+                    emit(Resource.Error(null, result.errorMessage))
+            }
+        }
+    }
+
+    override fun getGameListMetaCritic(): Flow<Resource<out List<GameList>>> {
+        return flow {
+            emit(Resource.Loading(null))
+
+            when (val result = remoteDataSource.getGameListMetaCritic().first()) {
+                is ApiResponse.Success ->
+                    emit(Resource.Success(DataMapper.fromGameListResponseToGameList(result.data)))
+
+                is ApiResponse.Empty ->
+                    emit(Resource.Success(listOf<GameList>()))
+
+                is ApiResponse.Error ->
+                    emit(Resource.Error(null, result.errorMessage))
+            }
         }
     }
 }

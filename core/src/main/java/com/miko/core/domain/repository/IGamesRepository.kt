@@ -21,4 +21,8 @@ interface IGamesRepository {
 
     fun deleteFavoriteGame(gameId: Int)
 
+    fun getGameListReleased(date: String): Flow<Resource<out List<GameList>>>
+
+    fun getGameListMetaCritic(): Flow<Resource<out List<GameList>>>
+
 }

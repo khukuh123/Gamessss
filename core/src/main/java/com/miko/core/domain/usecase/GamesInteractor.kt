@@ -5,6 +5,9 @@ import com.miko.core.domain.model.GameDetail
 import com.miko.core.domain.model.GameList
 import com.miko.core.domain.repository.IGamesRepository
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class GamesInteractor(private val gamesRepository: IGamesRepository) : GamesUseCase {
     override fun getListGame(): Flow<Resource<List<GameList>>> =
@@ -33,4 +36,32 @@ class GamesInteractor(private val gamesRepository: IGamesRepository) : GamesUseC
     override fun deleteFavoriteGame(gameId: Int) =
         gamesRepository.deleteFavoriteGame(gameId)
 
+    override fun getGameListSorted(type: Int): Flow<Resource<out List<GameList>>> {
+        return when (type) {
+            0 -> {
+                val currentDate = LocalDate.now()
+                val lastMonth = currentDate.minusDays(7)
+                val format = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                val string = "${lastMonth.format(format)},${currentDate.format(format)}"
+                gamesRepository.getGameListReleased(string)
+            }
+
+            1 -> {
+                val currentDate = LocalDate.now()
+                val lastMonth = currentDate.minusDays(30)
+                val format = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+                val string = "${lastMonth.format(format)},${currentDate.format(format)}"
+                gamesRepository.getGameListReleased(string)
+
+            }
+
+            2 -> {
+                gamesRepository.getGameListMetaCritic()
+            }
+
+            else -> {
+                flow<Resource<List<GameList>>> { emit(Resource.Error(null, "Choice is unknown")) }
+            }
+        }
+    }
 }

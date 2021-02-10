@@ -17,4 +17,10 @@ interface ApiService {
     @GET("games/{id}")
     suspend fun getGameDetail(@Path("id") id: String): GameDetailResponse
 
+    @GET("games")
+    suspend fun getGameListReleased(@Query("dates") date: String): GameListResponse
+
+    @GET("games?ordering=-metacritic")
+    suspend fun getGameListMetaCritic(): GameListResponse
+
 }

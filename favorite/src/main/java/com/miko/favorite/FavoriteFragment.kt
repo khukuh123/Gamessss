@@ -20,21 +20,28 @@ class FavoriteFragment : Fragment() {
     private var adapter: FavoriteAdapter? = null
     private val favoriteViewModel: FavoriteViewModel by viewModel()
     private var clearButtonState = false
+    private var gameLists: ArrayList<GameList>? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        loadKoinModules(favoriteModule)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentFavoriteBinding.inflate(inflater)
-        loadKoinModules(favoriteModule)
         return binding?.root
     }
 
     override fun onResume() {
         super.onResume()
-        favoriteViewModel.getFavoriteGames().observe(viewLifecycleOwner, { data ->
-            updateRecyclerList(ArrayList(data))
-        })
+        if (gameLists == null) {
+            callMethod()
+        } else {
+            updateRecyclerList(ArrayList(gameLists as List<GameList>))
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -49,13 +56,24 @@ class FavoriteFragment : Fragment() {
                 setHasFixedSize(true)
                 layoutManager = mLayoutManager
             }
-            favoriteViewModel.getFavoriteGames().observe(viewLifecycleOwner, { data ->
-                updateRecyclerList(ArrayList(data))
-            })
+
+            if (gameLists == null) {
+                callMethod()
+            } else {
+                updateRecyclerList(gameLists as ArrayList<GameList>)
+            }
+            //
             btnDelete.setOnClickListener {
                 updateList()
             }
         }
+    }
+
+    private fun callMethod() {
+        favoriteViewModel.getFavoriteGames().observe(viewLifecycleOwner, { data ->
+            gameLists = ArrayList(data)
+            updateRecyclerList(gameLists as ArrayList<GameList>)
+        })
     }
 
     override fun onDestroyView() {
@@ -66,9 +84,8 @@ class FavoriteFragment : Fragment() {
 
     private fun updateList() {
         adapter?.clearButtonState = !clearButtonState
-        favoriteViewModel.getFavoriteGames().observe(viewLifecycleOwner, { data ->
-            updateRecyclerList(ArrayList(data))
-        })
+
+        updateRecyclerList(gameLists as ArrayList<GameList>)
 
         clearButtonState = !clearButtonState
     }
@@ -86,9 +103,6 @@ class FavoriteFragment : Fragment() {
 
                 override fun onClearButtonClicked(gameList: GameList) {
                     favoriteViewModel.deleteFavoriteGame(gameList.id)
-                    favoriteViewModel.getFavoriteGames().observe(viewLifecycleOwner, { data ->
-                        updateRecyclerList(ArrayList(data))
-                    })
                 }
             })
         }

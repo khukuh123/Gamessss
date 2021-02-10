@@ -1,0 +1,10 @@
+<resources>
+    <string name="sort_by">Sort by</string>
+    <string-array name="sort_list_item">
+
+        <item>Last week</item>
+        <item>Last 30 days</item>
+        <item>Metacritic</item>
+
+    </string-array>
+</resources>
