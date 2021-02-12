@@ -190,7 +190,7 @@ object DataMapper {
         return result.toString()
     }
 
-    private fun stringToListOfSectionItem(string: String): List<SectionItem> {
+    fun stringToListOfSectionItem(string: String): List<SectionItem> {
         val result = if (string.isNotEmpty()) string else "-"
 
         return result.removeSurrounding("[", "]").split(",").map {
