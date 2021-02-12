@@ -1,15 +1,67 @@
 package com.miko.core.utils
 
+import android.util.Log
 import com.miko.core.data.source.local.entity.GameEntity
 import com.miko.core.data.source.local.entity.GameFavorite
+import com.miko.core.data.source.remote.network.ApiResponse
+import com.miko.core.data.source.remote.response.GameDetailResponse
 import com.miko.core.data.source.remote.response.GameListItem
 import com.miko.core.data.source.remote.response.GameListResponse
 import com.miko.core.domain.model.GameDetail
 import com.miko.core.domain.model.GameList
 import com.miko.core.domain.model.Section
 import com.miko.core.domain.model.SectionItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
+import okio.IOException
+import retrofit2.HttpException
 
 object DataDummy {
+
+    fun makeRemoteFlow(response: GameDetailResponse): Flow<ApiResponse<GameDetailResponse>> {
+        return flow {
+            try {
+                emit(ApiResponse.Success(response))
+            } catch (t: Throwable) {
+                when (t) {
+                    is IOException -> emit(ApiResponse.Error("Network Error"))
+
+                    is HttpException -> emit(ApiResponse.Error("${t.code()}\n${t.message()}"))
+
+                    else -> {
+                        emit(ApiResponse.Error("Unknown Error\n${t.message.toString()}"))
+                        Log.d("RemoteDataSource", t.message.toString())
+                    }
+                }
+            }
+        }.flowOn(Dispatchers.IO)
+    }
+
+    fun makeRemoteFlow(response: GameListResponse): Flow<ApiResponse<GameListResponse>> {
+        return flow {
+            try {
+
+                if (response.results.isNotEmpty()) {
+                    emit(ApiResponse.Success(response))
+                } else {
+                    emit(ApiResponse.Empty)
+                }
+            } catch (t: Throwable) {
+                when (t) {
+                    is IOException -> emit(ApiResponse.Error("Network Error"))
+
+                    is HttpException -> emit(ApiResponse.Error("${t.code()}\n${t.message()}"))
+
+                    else -> {
+                        emit(ApiResponse.Error("Unknown Error\n${t.message.toString()}"))
+                        Log.d("RemoteDataSource", t.message.toString())
+                    }
+                }
+            }
+        }.flowOn(Dispatchers.IO)
+    }
 
     fun generateGameListResponse(): GameListResponse {
         val listOfGameListItem = mutableListOf<GameListItem>()

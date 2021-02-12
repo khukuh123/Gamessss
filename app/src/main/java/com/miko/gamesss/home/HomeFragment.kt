@@ -60,9 +60,11 @@ class HomeFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
+        binding?.rvHome?.adapter = null
         binding = null
         adapter?.destroy()
+
+        super.onDestroyView()
     }
 
     private fun showLoadingScreen(visible: Boolean) {

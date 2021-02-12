@@ -74,9 +74,11 @@ class BrowseFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
+        binding?.rvBrowse?.adapter = null
         binding = null
         adapter?.destroy()
+
+        super.onDestroyView()
     }
 
     private fun showLoadingScreen(visible: Boolean) {

@@ -125,6 +125,7 @@ class DetailSectionAdapter(private val titles: List<Section>) : BaseExpandableLi
     override fun isEmpty(): Boolean = false
 
     fun destroy() {
+        ChildHolder.horizontalListView = null
         bindingItemGroup = null
         bindingItemParent = null
         detailSectionItemAdapter?.destroy()

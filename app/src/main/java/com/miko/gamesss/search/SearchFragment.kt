@@ -73,9 +73,11 @@ class SearchFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
+        binding?.rvSearch?.adapter = null
         binding = null
         adapter?.destroy()
+
+        super.onDestroyView()
     }
 
     private fun showLoadingScreen(visible: Boolean) {
