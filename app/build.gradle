@@ -16,6 +16,10 @@ android {
         viewBinding = true
     }
 
+    lintOptions {
+        disable "UnsafeExperimentalUsageError", "UnsafeExperimentalUsageWarning"
+    }
+
     defaultConfig {
         applicationId "com.miko.gamesss"
         minSdkVersion 26
