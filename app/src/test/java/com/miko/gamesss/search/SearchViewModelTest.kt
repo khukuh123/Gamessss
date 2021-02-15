@@ -67,8 +67,7 @@ class SearchViewModelTest {
     @Test
     fun `getSearchResult's gamesRepository called at least once, return a non-null and 10 size result and there's a change on observer`() =
         runBlocking {
-            searchViewModel.setSearchQuery(QUERY)
-            searchViewModel.getSearchResult().observeForever(observer)
+            searchViewModel.getSearchResult(QUERY).observeForever(observer)
             verify(gamesUseCase).searchGame(QUERY)
 
             verify(observer).onChanged(captor.capture())

@@ -19,6 +19,7 @@ import com.miko.gamesss.databinding.ActivityDetailBinding
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class DetailActivity : AppCompatActivity() {
+
     private var binding: ActivityDetailBinding? = null
     private var gameId = -1
     private var adapter: DetailSectionAdapter? = null
@@ -29,7 +30,7 @@ class DetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
+        adapter = DetailSectionAdapter()
 
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding?.root)
@@ -37,23 +38,23 @@ class DetailActivity : AppCompatActivity() {
         gameId = DetailActivityArgs.fromBundle(intent.extras as Bundle).gameId
 
         detailViewModel.getGameDetail("$gameId").observe(this, { result ->
-            val gameDetail: GameDetail?
-
             if (result != null) {
                 when (result) {
                     is Resource.Success -> {
-                        gameDetail = result.data
-
-                        if (gameDetail != null) {
-                            setGameDetail(gameDetail)
-                        }
+                        setGameDetail(result.data as GameDetail)
 
                         showLoadingScreen(false)
                     }
 
                     is Resource.Error -> {
-                        Toast.makeText(this, result.message, Toast.LENGTH_LONG).show()
                         showLoadingScreen(false)
+                        binding?.run {
+                            with(errorDetail) {
+                                root.visibility = View.VISIBLE
+                                tvError.text = result.message
+                            }
+                            fabFavorite.visibility = View.GONE
+                        }
                     }
 
                     is Resource.Loading -> {
@@ -69,13 +70,20 @@ class DetailActivity : AppCompatActivity() {
         mMenu = menu as Menu
 
         binding?.run {
-            appBarDetail.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { _, verticalOffset ->
-                if (mMenu != null) {
-                    val btnFavorite = mMenu?.findItem(R.id.btnFavorite)
-
-                    btnFavorite?.isVisible = verticalOffset != 0
+            appBarDetail.addOnOffsetChangedListener(object : AppBarLayout.OnOffsetChangedListener {
+                var lastOffset = -1
+                override fun onOffsetChanged(appBarLayout: AppBarLayout?, verticalOffset: Int) {
+                    if (verticalOffset == 0) {
+                        mMenu?.findItem(R.id.btnFavorite)?.isVisible = false
+                        lastOffset = verticalOffset
+                    } else {
+                        if (lastOffset > 0) return
+                        mMenu?.findItem(R.id.btnFavorite)?.isVisible = true
+                        lastOffset = verticalOffset
+                    }
                 }
             })
+
             fabFavorite.setOnClickListener {
                 if (!checkFavoriteModule()) {
                     setFavoriteState(!btnFavoriteState)
@@ -149,7 +157,7 @@ class DetailActivity : AppCompatActivity() {
             ).into(ivDetailGame)
             etvAboutDetail.text = gameDetail.description
 
-            adapter = DetailSectionAdapter(gameDetail.listSection)
+            adapter?.setListSection(ArrayList(gameDetail.listSection))
             elvDetail.setAdapter(adapter)
 
             setListViewHeightBasedOnChildren(elvDetail, true)
@@ -193,21 +201,23 @@ class DetailActivity : AppCompatActivity() {
         binding?.run {
 
             if (visible) {
-                loadingDetail.root.visibility = View.VISIBLE
+                tvMetaCriticDetail.visibility = View.GONE
+                loadingDetail.visibility = View.VISIBLE
                 fabFavorite.visibility = View.GONE
             } else {
-                loadingDetail.root.visibility = View.GONE
+                tvMetaCriticDetail.visibility = View.VISIBLE
+                loadingDetail.visibility = View.GONE
                 fabFavorite.visibility = View.VISIBLE
             }
 
         }
     }
 
-    private fun setListViewHeightBasedOnChildren(elv: ExpandableListView, isExpanded: Boolean) {
+    private fun setListViewHeightBasedOnChildren(elv: ExpandableListView, isNotExpanded: Boolean) {
         var totalHeight = 0
         val params = elv.layoutParams
 
-        if (isExpanded) {
+        if (isNotExpanded) {
             val groupCount = adapter?.groupCount
 
             if (groupCount != null) {

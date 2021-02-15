@@ -10,7 +10,7 @@ import com.miko.core.R
 import com.miko.core.databinding.ListRowFavoriteBinding
 import com.miko.core.domain.model.GameList
 
-class FavoriteAdapter(private val gameLists: ArrayList<GameList>) :
+class FavoriteAdapter(private val gameLists: ArrayList<GameList> = ArrayList()) :
     RecyclerView.Adapter<FavoriteAdapter.ListViewHolder>() {
     inner class ListViewHolder(private val binding: ListRowFavoriteBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -56,13 +56,15 @@ class FavoriteAdapter(private val gameLists: ArrayList<GameList>) :
 
     override fun getItemCount(): Int = gameLists.size
 
-    fun setGameLists(gameLists: ArrayList<GameList>) {
-        this.gameLists.clear()
-        this.gameLists.addAll(gameLists)
-    }
-
     fun setOnClickCallback(onClickCallback: OnClickCallback) {
         this.onClickCallback = onClickCallback
+    }
+
+    fun setFavoriteList(newData: ArrayList<GameList>) {
+        with(gameLists) {
+            clear()
+            addAll(newData)
+        }
     }
 
     fun destroy() {

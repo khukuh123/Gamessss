@@ -66,8 +66,7 @@ class BrowseViewModelTest {
     fun `getGameListSorted's gamesRepository called at least once, return non-null and 10 size result and there's a change on observer`() =
         coroutineScope.runBlockingTest {
 
-            browseViewModel.setGameListSorted(TYPE)
-            browseViewModel.getGameListSorted()?.observeForever(observer)
+            browseViewModel.getGameListSorted(TYPE).observeForever(observer)
             verify(gamesUseCase).getGameListSorted(TYPE)
 
             verify(observer).onChanged(captor.capture())

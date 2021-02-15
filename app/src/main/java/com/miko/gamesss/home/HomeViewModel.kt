@@ -9,12 +9,6 @@ import com.miko.core.domain.usecase.GamesUseCase
 
 class HomeViewModel(private val gamesUseCase: GamesUseCase) : ViewModel() {
 
-    private lateinit var _gameLists: LiveData<Resource<List<GameList>>>
-
-    fun setGameList() {
-        _gameLists = gamesUseCase.getListGame().asLiveData()
-    }
-
-    fun getGameList(): LiveData<Resource<List<GameList>>> = _gameLists
+    fun getGameList(): LiveData<Resource<List<GameList>>> = gamesUseCase.getListGame().asLiveData()
 
 }

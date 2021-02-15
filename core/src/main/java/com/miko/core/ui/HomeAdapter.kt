@@ -9,7 +9,7 @@ import com.miko.core.R
 import com.miko.core.databinding.ListRowHomeBinding
 import com.miko.core.domain.model.GameList
 
-class HomeAdapter(private val gameLists: ArrayList<GameList>) :
+class HomeAdapter(private val gameLists: ArrayList<GameList> = ArrayList()) :
     RecyclerView.Adapter<HomeAdapter.ListViewHolder>() {
     inner class ListViewHolder(private val binding: ListRowHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -45,6 +45,13 @@ class HomeAdapter(private val gameLists: ArrayList<GameList>) :
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
+    }
+
+    fun setHomeList(gameLists: ArrayList<GameList>) {
+        with(this.gameLists) {
+            clear()
+            addAll(gameLists)
+        }
     }
 
     fun destroy() {

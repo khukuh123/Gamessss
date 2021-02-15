@@ -3,5 +3,10 @@
     <string name="game_image">Game Image</string>
     <string name="clear_button">Clear Button</string>
     <string name="section_title">Section Title</string>
+    <string name="hmm_such_empty">Hmm, such empty</string>
+    <string name="rating_dummy">4.5★</string>
+    <string name="game_name_dummy">Game Name</string>
+    <string name="metacritic_dummy">78</string>
+    <string name="genres_dummy">Action, Action, Action, Action, Action</string>
 
 </resources>

@@ -8,6 +8,9 @@ import com.miko.core.data.source.remote.RemoteDataSource
 import com.miko.core.data.source.remote.network.ApiService
 import com.miko.core.domain.repository.IGamesRepository
 import com.miko.core.utils.AppExecutors
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -19,21 +22,30 @@ import java.util.concurrent.TimeUnit
 val databaseModule = module {
     factory { get<GamesDatabase>().gamesDao() }
     single {
+        val passPhrase: ByteArray = SQLiteDatabase.getBytes("GitGud".toCharArray())
+        val factory = SupportFactory(passPhrase)
         Room.databaseBuilder(
             androidContext(),
             GamesDatabase::class.java, "Gamesss.db"
-        ).fallbackToDestructiveMigration().build()
+        ).fallbackToDestructiveMigration().openHelperFactory(factory).build()
     }
 }
 
 val networkModule = module {
     single {
+        val hostname = "api.rawg.io"
+        val certificatePinner = CertificatePinner.Builder()
+            .add(hostname, "sha256/UGwY2lttaRoHnGd1gpeydmov1LzioQpzYTywtNSJkAU=")
+            .add(hostname, "sha256/hS5jJ4P+iQUErBkvoWBQOd1T7VOAYlOVegvv1iMzpxA=")
+            .add(hostname, "sha256/Y9mvm0exBk1JoQ57f9Vm28jKo5lFm/woKcVxrYxu80o=")
+            .build()
         OkHttpClient.Builder()
             .addInterceptor(
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
             )
             .connectTimeout(120, TimeUnit.SECONDS)
             .readTimeout(120, TimeUnit.SECONDS)
+            .certificatePinner(certificatePinner)
             .build()
     }
     single {

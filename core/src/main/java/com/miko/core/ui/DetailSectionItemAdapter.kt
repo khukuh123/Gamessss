@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.miko.core.databinding.ItemChildBinding
 import com.miko.core.domain.model.SectionItem
 
-class DetailSectionItemAdapter(private val listItem: List<SectionItem>) :
+class DetailSectionItemAdapter(private val listItem: ArrayList<SectionItem> = ArrayList()) :
     RecyclerView.Adapter<DetailSectionItemAdapter.ListViewHolder>() {
     inner class ListViewHolder(private val binding: ItemChildBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -29,6 +29,13 @@ class DetailSectionItemAdapter(private val listItem: List<SectionItem>) :
     }
 
     override fun getItemCount(): Int = listItem.size
+
+    fun setListSectionItem(listSectionItem: ArrayList<SectionItem>) {
+        with(listItem) {
+            clear()
+            addAll(listSectionItem)
+        }
+    }
 
     fun destroy() {
         binding = null

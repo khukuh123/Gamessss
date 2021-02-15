@@ -9,7 +9,7 @@ import com.miko.core.R
 import com.miko.core.databinding.ListRowSearchBinding
 import com.miko.core.domain.model.GameList
 
-class SearchAdapter(private val gameLists: ArrayList<GameList>) :
+class SearchAdapter(private val gameLists: ArrayList<GameList> = ArrayList()) :
     RecyclerView.Adapter<SearchAdapter.ListViewHolder>() {
     inner class ListViewHolder(private val binding: ListRowSearchBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -29,11 +29,6 @@ class SearchAdapter(private val gameLists: ArrayList<GameList>) :
     private var binding: ListRowSearchBinding? = null
     private lateinit var onItemClickCallback: OnItemClickCallback
 
-    fun setGameLists(newData: ArrayList<GameList>) {
-        gameLists.clear()
-        gameLists.addAll(newData)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         binding = ListRowSearchBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ListViewHolder(binding as ListRowSearchBinding)
@@ -52,6 +47,13 @@ class SearchAdapter(private val gameLists: ArrayList<GameList>) :
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
+    }
+
+    fun setSearchResult(gameLists: ArrayList<GameList>) {
+        with(this.gameLists) {
+            clear()
+            addAll(gameLists)
+        }
     }
 
     fun destroy() {

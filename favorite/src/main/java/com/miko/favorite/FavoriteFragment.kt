@@ -35,45 +35,32 @@ class FavoriteFragment : Fragment() {
         return binding?.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (gameLists == null) {
-            callMethod()
-        } else {
-            updateRecyclerList(ArrayList(gameLists as List<GameList>))
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapter = FavoriteAdapter(arrayListOf())
+        adapter = FavoriteAdapter()
 
         binding?.run {
             val mLayoutManager = LinearLayoutManager(requireContext())
 
             with(rvFavorite) {
-                setHasFixedSize(true)
                 layoutManager = mLayoutManager
+                adapter = adapter
+                setHasFixedSize(true)
             }
 
-            if (gameLists == null) {
-                callMethod()
-            } else {
+            favoriteViewModel.getFavoriteGames().observe(viewLifecycleOwner, { data ->
+                gameLists = ArrayList(data)
+                if (gameLists?.isEmpty() as Boolean) {
+                    binding?.emptyFavorite?.root?.visibility = View.VISIBLE
+                }
                 updateRecyclerList(gameLists as ArrayList<GameList>)
-            }
-            //
+            })
+
             btnDelete.setOnClickListener {
                 updateList()
             }
         }
-    }
-
-    private fun callMethod() {
-        favoriteViewModel.getFavoriteGames().observe(viewLifecycleOwner, { data ->
-            gameLists = ArrayList(data)
-            updateRecyclerList(gameLists as ArrayList<GameList>)
-        })
     }
 
     override fun onDestroyView() {
@@ -94,7 +81,7 @@ class FavoriteFragment : Fragment() {
 
     private fun updateRecyclerList(gameLists: ArrayList<GameList>) {
         adapter?.run {
-            setGameLists(gameLists)
+            setFavoriteList(gameLists)
             setOnClickCallback(object : FavoriteAdapter.OnClickCallback {
                 override fun onItemClicked(gameList: GameList) {
                     val toDetailActivity =

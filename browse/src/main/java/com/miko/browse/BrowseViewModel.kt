@@ -9,12 +9,7 @@ import com.miko.core.domain.usecase.GamesUseCase
 
 class BrowseViewModel(private val gamesUseCase: GamesUseCase) : ViewModel() {
 
-    private var _gameLists: LiveData<Resource<out List<GameList>>>? = null
-
-    fun setGameListSorted(type: Int) {
-        _gameLists = gamesUseCase.getGameListSorted(type).asLiveData()
-    }
-
-    fun getGameListSorted(): LiveData<Resource<out List<GameList>>>? = _gameLists
+    fun getGameListSorted(type: Int): LiveData<Resource<out List<GameList>>> =
+        gamesUseCase.getGameListSorted(type).asLiveData()
 
 }

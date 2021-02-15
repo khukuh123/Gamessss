@@ -11,9 +11,8 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
         android:hint="@string/sort_by"
-        android:labelFor="@id/autoComplete"
+        android:padding="16dp"
         app:layout_constraintBottom_toTopOf="@id/rvBrowse"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -35,8 +34,52 @@
         app:spanCount="2" />
 
     <include
+        android:id="@+id/browseCompass"
+        layout="@layout/browse_compass"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tilSortBy" />
+
+    <include
+        android:id="@+id/errorBrowse"
+        layout="@layout/error"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tilSortBy" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/loadingBrowse"
-        layout="@layout/loading"
-        android:visibility="gone" />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tilSortBy"
+        app:shimmer_auto_start="true">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/loading_browse" />
+
+                <include layout="@layout/loading_browse" />
+
+                <include layout="@layout/loading_browse" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

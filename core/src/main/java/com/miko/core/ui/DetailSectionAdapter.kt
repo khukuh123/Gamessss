@@ -13,7 +13,8 @@ import com.miko.core.databinding.ItemGroupChildBinding
 import com.miko.core.databinding.ItemParentBinding
 import com.miko.core.domain.model.Section
 
-class DetailSectionAdapter(private val titles: List<Section>) : BaseExpandableListAdapter() {
+class DetailSectionAdapter(private val titles: ArrayList<Section> = ArrayList()) :
+    BaseExpandableListAdapter() {
 
     private class ParentHolder {
         lateinit var titleName: TextView
@@ -26,7 +27,7 @@ class DetailSectionAdapter(private val titles: List<Section>) : BaseExpandableLi
 
     private var bindingItemParent: ItemParentBinding? = null
     private var bindingItemGroup: ItemGroupChildBinding? = null
-    private var detailSectionItemAdapter: DetailSectionItemAdapter? = null
+    private var detailSectionItemAdapter: DetailSectionItemAdapter? = DetailSectionItemAdapter()
 
     override fun getGroupCount(): Int =
         titles.size
@@ -108,7 +109,7 @@ class DetailSectionAdapter(private val titles: List<Section>) : BaseExpandableLi
             false
         )
 
-        detailSectionItemAdapter = DetailSectionItemAdapter(section.listItem)
+        detailSectionItemAdapter?.setListSectionItem(ArrayList(section.listItem))
         ChildHolder.horizontalListView = mConvertView?.findViewById(R.id.rvDetail) as RecyclerView
         ChildHolder.horizontalListView?.run {
             layoutManager = mLayoutManager
@@ -123,6 +124,13 @@ class DetailSectionAdapter(private val titles: List<Section>) : BaseExpandableLi
     override fun areAllItemsEnabled(): Boolean = false
 
     override fun isEmpty(): Boolean = false
+
+    fun setListSection(listSection: ArrayList<Section>) {
+        with(titles) {
+            clear()
+            addAll(listSection)
+        }
+    }
 
     fun destroy() {
         ChildHolder.horizontalListView = null

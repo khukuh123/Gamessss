@@ -26,8 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="240dp"
                 android:contentDescription="@string/game_image"
-                android:scaleType="centerCrop"
-                android:src="@drawable/ic_image" />
+                android:scaleType="centerCrop" />
 
             <View
                 android:layout_width="match_parent"
@@ -157,9 +156,21 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <include
+    <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/loadingDetail"
-        layout="@layout/loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <include layout="@layout/loading_detail" />
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <include
+        android:id="@+id/errorDetail"
+        layout="@layout/error"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

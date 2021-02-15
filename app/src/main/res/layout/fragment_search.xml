@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@color/primaryColor"
+    tools:background="@color/primaryDarkColor"
     tools:context=".search.SearchFragment">
 
     <com.google.android.material.textview.MaterialTextView
@@ -36,8 +36,56 @@
         tools:listitem="@layout/list_row_search" />
 
     <include
+        android:id="@+id/emptySearch"
+        layout="@layout/empty_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSearchResult" />
+
+    <include
+        android:id="@+id/errorSearch"
+        layout="@layout/error"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSearchResult" />
+
+    <com.facebook.shimmer.ShimmerFrameLayout
         android:id="@+id/loadingSearch"
-        layout="@layout/loading"
-        android:visibility="gone" />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvSearchResult">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/loading_search" />
+
+                <include layout="@layout/loading_search" />
+
+                <include layout="@layout/loading_search" />
+
+                <include layout="@layout/loading_search" />
+
+                <include layout="@layout/loading_search" />
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

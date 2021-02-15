@@ -9,7 +9,7 @@ import com.miko.core.R
 import com.miko.core.databinding.ListRowBrowseBinding
 import com.miko.core.domain.model.GameList
 
-class BrowseAdapter(private val gameLists: ArrayList<GameList>) :
+class BrowseAdapter(private val gameLists: ArrayList<GameList> = ArrayList()) :
     RecyclerView.Adapter<BrowseAdapter.ListViewHolder>() {
     inner class ListViewHolder(private val binding: ListRowBrowseBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -50,8 +50,10 @@ class BrowseAdapter(private val gameLists: ArrayList<GameList>) :
     }
 
     fun setGameLists(newData: ArrayList<GameList>) {
-        gameLists.clear()
-        gameLists.addAll(newData)
+        with(gameLists) {
+            clear()
+            addAll(newData)
+        }
     }
 
     fun destroy() {

@@ -63,7 +63,6 @@ class HomeViewModelTest {
     @Test
     fun `getGameList's gamesRepository called at least once, return non-null and 10 size result and there's a change on observer`() =
         coroutineScope.runBlockingTest {
-            homeViewModel.setGameList()
             homeViewModel.getGameList().observeForever(observer)
             verify(gamesUseCase).getListGame()
 

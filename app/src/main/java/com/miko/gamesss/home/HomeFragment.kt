@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.miko.core.data.Resource
@@ -28,16 +27,18 @@ class HomeFragment : Fragment() {
         return binding?.root
     }
 
-    override fun onResume() {
-        super.onResume()
-        homeViewModel.setGameList()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.rvHome?.setHasFixedSize(true)
-        homeViewModel.setGameList()
+        adapter = HomeAdapter()
+
+        binding?.run {
+            with(rvHome) {
+                adapter = adapter
+                setHasFixedSize(true)
+            }
+        }
+
         homeViewModel.getGameList().observe(viewLifecycleOwner, { result ->
             if (result != null) {
                 when (result) {
@@ -47,7 +48,12 @@ class HomeFragment : Fragment() {
 
                     is Resource.Error -> {
                         showLoadingScreen(false)
-                        Toast.makeText(requireContext(), result.message, Toast.LENGTH_LONG).show()
+                        binding?.run {
+                            with(errorHome) {
+                                root.visibility = View.VISIBLE
+                                tvError.text = result.message
+                            }
+                        }
                     }
 
                     is Resource.Success -> {
@@ -69,21 +75,23 @@ class HomeFragment : Fragment() {
 
     private fun showLoadingScreen(visible: Boolean) {
         binding?.run {
-            loadingHome.root.visibility = if (visible) View.VISIBLE else View.GONE
+            loadingHome.visibility = if (visible) View.VISIBLE else View.GONE
         }
     }
 
     private fun updateRecyclerList(gameLists: List<GameList>) {
-        adapter = HomeAdapter(ArrayList(gameLists))
-        adapter?.setOnItemClickCallback(object : HomeAdapter.OnItemClickCallback {
-            override fun onItemClicked(gameList: GameList) {
-                val toDetailActivity =
-                    HomeFragmentDirections.actionHomeFragmentToDetailActivity(gameList.id)
+        adapter?.run {
+            setHomeList(ArrayList(gameLists))
+            setOnItemClickCallback(object : HomeAdapter.OnItemClickCallback {
+                override fun onItemClicked(gameList: GameList) {
+                    val toDetailActivity =
+                        HomeFragmentDirections.actionHomeFragmentToDetailActivity(gameList.id)
 
-                view?.findNavController()?.navigate(toDetailActivity)
-            }
+                    view?.findNavController()?.navigate(toDetailActivity)
+                }
 
-        })
+            })
+        }
 
         binding?.run {
             rvHome.adapter = adapter

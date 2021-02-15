@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ivLoadingDetail"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:background="#DDD"
+        android:contentDescription="@string/game_image"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0" />
+
+    <TextView
+        android:id="@+id/tvLoadingGameDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="#888"
+        android:text="@string/game_name_dummy"
+        android:textColor="#0000"
+        android:textSize="45sp"
+        app:layout_constraintBottom_toBottomOf="@id/ivLoadingDetail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvLoadingRatingDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="#DDD"
+        android:text="@string/rating_dummy"
+        android:textColor="#0000"
+        android:textSize="28sp"
+        app:layout_constraintBottom_toTopOf="@id/tvLoadingGenresDetail"
+        app:layout_constraintEnd_toStartOf="@id/tvLoadingMetaCriticDetail"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivLoadingDetail" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvLoadingMetaCriticDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/round_corner"
+        android:paddingHorizontal="8dp"
+        android:paddingVertical="4dp"
+        android:text="@string/metacritic_dummy"
+        android:textAlignment="center"
+        android:textColor="#0000"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/tvLoadingRatingDetail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvLoadingRatingDetail"
+        app:layout_constraintTop_toTopOf="@id/tvLoadingRatingDetail" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tvLoadingGenresDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="#DDD"
+        android:text="@string/genres_dummy"
+        android:textColor="#0000"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvLoadingRatingDetail" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

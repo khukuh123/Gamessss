@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -35,23 +34,28 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.run {
-            rvSearch.layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            rvSearch.setHasFixedSize(true)
-        }
+        adapter = SearchAdapter()
 
-        adapter = SearchAdapter(arrayListOf())
+        binding?.run {
+            with(rvSearch) {
+                layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                adapter = adapter
+                setHasFixedSize(true)
+            }
+        }
 
         val query = arguments?.getString(QUERY)
         if (query != null) {
             binding?.run {
-                searchViewModel.setSearchQuery(query)
-                searchViewModel.getSearchResult().observe(viewLifecycleOwner, { result ->
+                searchViewModel.getSearchResult(query).observe(viewLifecycleOwner, { result ->
                     if (result != null) {
                         when (result) {
                             is Resource.Success -> {
                                 val data = result.data as List<GameList>
+                                if (data.isEmpty()) {
+                                    binding?.emptySearch?.root?.visibility = View.VISIBLE
+                                }
                                 updateRecyclerList(ArrayList(data))
                                 showLoadingScreen(false)
                             }
@@ -62,8 +66,12 @@ class SearchFragment : Fragment() {
 
                             is Resource.Error -> {
                                 showLoadingScreen(false)
-                                Toast.makeText(requireContext(), result.message, Toast.LENGTH_LONG)
-                                    .show()
+                                binding?.run {
+                                    with(errorSearch) {
+                                        root.visibility = View.VISIBLE
+                                        tvError.text = result.message
+                                    }
+                                }
                             }
                         }
                     }
@@ -82,13 +90,13 @@ class SearchFragment : Fragment() {
 
     private fun showLoadingScreen(visible: Boolean) {
         binding?.run {
-            loadingSearch.root.visibility = if (visible) View.VISIBLE else View.GONE
+            loadingSearch.visibility = if (visible) View.VISIBLE else View.GONE
         }
     }
 
     private fun updateRecyclerList(gameLists: ArrayList<GameList>) {
         adapter?.run {
-            setGameLists(gameLists)
+            setSearchResult(gameLists)
             setOnItemClickCallback(object : SearchAdapter.OnItemClickCallback {
                 override fun onItemClicked(gameList: GameList) {
                     val toDetailActivity =
@@ -97,9 +105,8 @@ class SearchFragment : Fragment() {
                 }
             })
         }
-        binding?.run {
-            rvSearch.adapter = adapter
-        }
+
+        binding?.rvSearch?.adapter = adapter
     }
 
 }

@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         if (navHostFragment.childFragmentManager.backStackEntryCount == 0) {
 
             if ((pressedTime + 2000 > System.currentTimeMillis())) {
-                super.onBackPressed()
+                finish()
             } else {
                 Toast.makeText(this, "Press back again to exit", Toast.LENGTH_SHORT).show()
             }
@@ -75,10 +75,8 @@ class MainActivity : AppCompatActivity() {
 
         searchViewItem = menu?.findItem(R.id.btnSearch)
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id != R.id.searchFragment) {
-                if (searchViewItem?.isActionViewExpanded as Boolean) {
-                    searchViewItem?.collapseActionView()
-                }
+            if (destination.id != R.id.searchFragment && searchViewItem?.isActionViewExpanded as Boolean) {
+                searchViewItem?.collapseActionView()
             }
         }
 
@@ -112,16 +110,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> {
-                navController.popBackStack()
-            }
-        }
-
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {

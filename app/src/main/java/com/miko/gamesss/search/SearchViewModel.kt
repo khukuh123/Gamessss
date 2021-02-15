@@ -9,12 +9,7 @@ import com.miko.core.domain.usecase.GamesUseCase
 
 class SearchViewModel(private val gamesUseCase: GamesUseCase) : ViewModel() {
 
-    private lateinit var gameLists: LiveData<Resource<List<GameList>>>
+    fun getSearchResult(query: String): LiveData<Resource<List<GameList>>> =
+        gamesUseCase.searchGame(query).asLiveData()
 
-    fun setSearchQuery(query: String) {
-        gameLists = gamesUseCase.searchGame(query).asLiveData()
-    }
-
-    fun getSearchResult(): LiveData<Resource<List<GameList>>> =
-        gameLists
 }
